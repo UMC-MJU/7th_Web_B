@@ -1,5 +1,7 @@
 # 7th-Web
 
+pr template test
+
 # 💚 UMC MJU 7th_Web - 자연
 
 [UMC MJU 7th를 위한 깃허브 사용법 및 규칙](https://www.notion.so/makeus-challenge/UMC-MJU-GITHUB-RULE-b45c0d968a1a4fb789c67f3b0081ce17?pvs=4)
@@ -8,7 +10,7 @@
 
 ## 🌱 Pull Requests Rule
 
-**Title**: N주차미션_닉네임 (ex. 1주차미션_제이)
+**Title**: N주차미션*닉네임 (ex. 1주차미션*제이)
 
 **Reviewers(PR을 리뷰해 줄 팀원)**: 스터디원 (최소)1명
 
@@ -36,11 +38,11 @@ TEST: 테스트 코드 추가 및 수정
 
 Copyright © Sojung Park (Bei) All rights reserved.
 
-
 ## 🍀 Members
+
 | [![텍스트](https://avatars.githubusercontent.com/u/128218483?v=4)](https://github.com/OrangeKim04) | [![텍스트](https://avatars.githubusercontent.com/u/164713708?v=4)](https://github.com/BbangSe01) |
-|:---:|:---:|
-| 제이/김규리 | 빵세/방세현|
+| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
+|                                            제이/김규리                                             |                                           빵세/방세현                                            |
 
 <br>
 
