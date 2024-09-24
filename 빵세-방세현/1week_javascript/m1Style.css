@@ -1,0 +1,22 @@
+#title {
+    text-align: center;
+}
+#textinput {
+    width:700px;
+    height:25px;
+    border-width: 1;
+    border-color: black;
+    text-align: center;
+}
+#schedulebox {
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+}
+#scheduleList {
+    width:500px;
+    display:flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
