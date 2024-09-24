@@ -12,19 +12,36 @@
     <br>
     <hr>
     <div id="schedulebox">
-        <input id="textinput" type="text" placeholder="스터디 계획을 작성해보세요!"/>
+        <input id="textinput" type="text" onkeypress="getSchedule(event)" placeholder="스터디 계획을 작성해보세요!"/>
+        <script>
+            let ans;
+            function getSchedule(e) {
+                let shouldlist = document.getElementById('shouldList'); // 해야 할 일 ol 불러오기
+                let newList = document.createElement('li'); // 해야할 일에 들어갈 li
+                let word = document.getElementById("textinput").value; // 입력한 계획 받아오기
+
+                if(e.key == 'Enter') {
+                    newList.innerHTML = word;
+                    shouldlist.appendChild(newList);
+                    document.getElementById("textinput").value = ""; // 입력 필드 초기화
+                }
+
+            }
+
+
+        </script>
         <div id="scheduleList">
             <div>
                 <h3>해야 할 일</h3>
-                <ol>
+                <ul id="shouldList">
 
-                </ol>
+                </ul>
             </div>
             <div>
                 <h3>해낸 일</h3>
-                <ol>
+                <ul>
                     
-                </ol>
+                </ul>
             </div>
         </div>
     </div>
