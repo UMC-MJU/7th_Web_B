@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo list</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <h2>UMC Study Plan</h2>
+      <form id="form" onsubmit="return false;">
+        <input type="text" id="new-item-text" placeholder="새 할 일 입력" />
+      </form>
+
+      <div class="todo-container">
+        <div class="todo-section">
+          <h3>해야 할 일</h3>
+          <div id="todo-items"></div>
+        </div>
+
+        <div class="completed-section">
+          <h3>해낸 일</h3>
+          <div id="completed-items"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
