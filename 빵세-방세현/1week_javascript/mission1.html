@@ -13,61 +13,76 @@
     <hr>
     <div id="schedulebox">
         <input id="textinput" type="text" onkeypress="getSchedule(event)" placeholder="스터디 계획을 작성해보세요!"/>
-        <script>
-            let ans;
-            // 입력한 값 해야 할 일 리스트에 추가하는 함수
-            function getSchedule(e) {
-                let shouldlist = document.getElementById('shouldList'); // 해야 할 일 ol 불러오기
-                let newList = document.createElement('li'); // 해야할 일에 들어갈 li
-                newList.id='nL';
-                let word = document.getElementById("textinput").value; // 입력한 계획 받아오기
-
-                if(e.key == 'Enter') {
-                    newList.innerHTML = word;
-
-                    let delbutton = document.createElement('button');
-                    delbutton.id='delButton';
-                    delbutton.innerHTML='완료';
-
-                    newList.appendChild(delbutton);
-                    delbutton.onclick = function() {
-                        completeWork(newList);
-                    }
-                
-                    shouldlist.appendChild(newList);
-                    document.getElementById("textinput").value = ""; // 입력 필드 초기화
-                }
-            }
-
-            function completeWork(chooselist) {
-                let compList = document.createElement('li');
-                let shouldParent = chooselist.parentElement;
-                let compParent = document.getElementById('compList');
-
-                // 버튼의 텍스트를 삭제하기 위한 코드
-                // substr() 함수 => 시작 index부터 지정된 문자수만큼 잘라내는 함수수
-                let prevword = chooselist.innerText.substr(0,chooselist.innerText.length-2);
-                compList.innerHTML = prevword;
-                shouldParent.removeChild(chooselist);
-                compParent.appendChild(compList);
-
-            }
-
-        </script>
         <div id="scheduleList">
-            <div>
-                <h3>해야 할 일</h3>
+            <div id="should">
+                <h3 class="subTitle1">해야 할 일</h3>
                 <ul id="shouldList">
 
                 </ul>
             </div>
-            <div>
-                <h3>해낸 일</h3>
+            <div id="complete">
+                <h3 class="subTitle2">해낸 일</h3>
                 <ul id='compList'>
                     
                 </ul>
             </div>
         </div>
     </div>
+    <script>
+        let ans;
+        // 입력한 값 해야 할 일 리스트에 추가하는 함수
+        function getSchedule(e) {
+            let shouldlist = document.getElementById('shouldList'); // 해야 할 일 ol 불러오기
+            let newList = document.createElement('li'); // 해야할 일에 들어갈 li
+            newList.id='nL';
+            let word = document.getElementById("textinput").value; // 입력한 계획 받아오기
+
+            if(e.key == 'Enter') {
+                newList.innerHTML = word;
+
+                let combutton = document.createElement('button');
+                combutton.id='comButton';
+                combutton.innerHTML='완료';
+
+                newList.appendChild(combutton);
+                combutton.onclick = function() {
+                    completeWork(newList);
+                }
+            
+                shouldlist.appendChild(newList);
+                document.getElementById("textinput").value = ""; // 입력 필드 초기화
+            }
+        }
+
+        function completeWork(chooselist) {
+            let compList = document.createElement('li'); // 해낸 일 리스트
+            compList.id='cL';
+            let shouldParent = chooselist.parentElement; // 해야 할 일 ul (부모요소)
+            let compParent = document.getElementById('compList'); // 해낸 일 ul (부모요소)
+
+            let delbutton = document.createElement('button'); // 삭제버튼 생성
+                delbutton.id='delButton';
+                delbutton.innerHTML='삭제';
+
+            // 버튼의 텍스트를 삭제하기 위한 코드, substr() 함수 => 시작 index부터 지정된 문자수만큼 잘라내는 함수
+            let prevword = chooselist.innerText.substr(0,chooselist.innerText.length-2);
+    
+            compList.innerHTML = prevword; 
+            compList.appendChild(delbutton);
+
+            shouldParent.removeChild(chooselist); // 부모요소를 이용한 DOM 요소 삭제 방법
+            compParent.appendChild(compList);
+
+            delbutton.onclick = function() {
+                deleteWork(compList);
+            }
+        }
+
+        // 해낸 일 삭제하는 함수 
+        function deleteWork(chooselist) {
+            chooselist.remove(); // 요소 제거
+        }
+
+    </script>
 </body>
 </html>

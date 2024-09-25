@@ -15,14 +15,35 @@
     align-items:center;
 }
 #scheduleList {
-    width:500px;
+    width:700px;
     display:flex;
     flex-direction: row;
-    justify-content:space-between;
+    justify-content:space-evenly;
 }
-#nL {
-    width:300px;
+#comButton{
+    margin-left: 70px;
 }
+
 #delButton{
     margin-left: 70px;
+}
+#should {
+    width:300px;
+}
+#complete {
+    width:300px;
+}
+#shouldList {
+    text-align: left;
+}
+#compList {
+    text-align: right;
+}
+.subTitle1 {
+    margin-bottom: 30px;
+    padding-left: 50px;
+}
+.subTitle2 {
+    padding-left:140px;
+    margin-bottom: 30px;
 }
