@@ -26,20 +26,6 @@
     justify-content:space-evenly;
     gap:130px;
 }
-#comButton{
-    width:40px;
-    font-weight: bold;
-    border-width:0px;
-    background-color: rgb(177, 221, 239);
-}
-
-
-#delButton{
-    width:40px;
-    font-weight: bold;
-    border-width:0px;
-    background-color: rgb(177, 221, 239);
-}
 #should {
     width:300px;
 }
@@ -52,7 +38,19 @@
 #compList {
     text-align: right;
 }
-#nL {
+.comButton{
+    width:40px;
+    font-weight: bold;
+    border-width:0px;
+    background-color: rgb(177, 221, 239);
+}
+.delButton{
+    width:40px;
+    font-weight: bold;
+    border-width:0px;
+    background-color: rgb(177, 221, 239);
+}
+.nL {
     display:flex;
     justify-content:space-between;
     border-width:0px;
@@ -64,7 +62,7 @@
     width:200px;
     font-weight: bold;
 }
-#cL {
+.cL {
     display:flex;
     justify-content:space-between;
     border-width:0px;
@@ -76,14 +74,14 @@
     width:200px;
     font-weight: bold;
 }
-.subTitle1 {
+.toDoList {
     display: inline-block; /* 텍스트 길이에 맞게 박스 크기 조정 */
     margin-left:90px;
     margin-bottom: 30px;
     border-bottom: 2px solid skyblue; /* 밑줄 적용 */
     padding-bottom: 5px; /* 밑줄과 텍스트 사이의 여백 */
 }
-.subTitle2 {
+.doneList {
     display: inline-block; /* 텍스트 길이에 맞게 박스 크기 조정 */
     margin-left:100px;
     margin-bottom: 30px;
