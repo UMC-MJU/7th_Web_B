@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <h2 id="title">UMC Study Plan</h2>
+<body id="body">
+    <h1 id="title">UMC Study Plan</h1>
     <br>
     <br>
-    <hr>
+    <hr class='hr'>
     <div id="schedulebox">
         <input id="textinput" type="text" onkeypress="getSchedule(event)" placeholder="스터디 계획을 작성해보세요!"/>
         <div id="scheduleList">
@@ -32,6 +32,7 @@
         let ans;
         // 입력한 값 해야 할 일 리스트에 추가하는 함수
         function getSchedule(e) {
+            let textinput = document.getElementById('textinput');
             let shouldlist = document.getElementById('shouldList'); // 해야 할 일 ol 불러오기
             let newList = document.createElement('li'); // 해야할 일에 들어갈 li
             newList.id='nL';

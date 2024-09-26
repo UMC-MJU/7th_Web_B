@@ -1,31 +1,44 @@
+#body {
+    background-color: rgb(219, 235, 239);
+}
 #title {
     text-align: center;
 }
 #textinput {
     width:700px;
-    height:25px;
-    border-width: 1;
-    border-color: black;
-    text-align: center;
+    height:35px;
+    border: 1px solid black;
+}
+#textinput:focus {
+    border: 2px solid rgb(149, 149, 202);
+    outline: none;
 }
 #schedulebox {
     display:flex;
     flex-direction:column;
     justify-content: center;
     align-items:center;
+    margin-top:20px;
 }
 #scheduleList {
-    width:700px;
     display:flex;
     flex-direction: row;
     justify-content:space-evenly;
+    gap:130px;
 }
 #comButton{
-    margin-left: 70px;
+    width:40px;
+    font-weight: bold;
+    border-width:0px;
+    background-color: rgb(177, 221, 239);
 }
 
+
 #delButton{
-    margin-left: 70px;
+    width:40px;
+    font-weight: bold;
+    border-width:0px;
+    background-color: rgb(177, 221, 239);
 }
 #should {
     width:300px;
@@ -39,11 +52,45 @@
 #compList {
     text-align: right;
 }
+#nL {
+    display:flex;
+    justify-content:space-between;
+    border-width:0px;
+    border-bottom-width: 2px;
+    border-color:skyblue;
+    border-style:solid;
+    padding-top:8px;
+    padding-bottom:8px;
+    width:200px;
+    font-weight: bold;
+}
+#cL {
+    display:flex;
+    justify-content:space-between;
+    border-width:0px;
+    border-bottom-width: 2px;
+    border-color:skyblue;
+    border-style:solid;
+    padding-top:7px;
+    padding-bottom:7px;
+    width:200px;
+    font-weight: bold;
+}
 .subTitle1 {
+    display: inline-block; /* 텍스트 길이에 맞게 박스 크기 조정 */
+    margin-left:90px;
     margin-bottom: 30px;
-    padding-left: 50px;
+    border-bottom: 2px solid skyblue; /* 밑줄 적용 */
+    padding-bottom: 5px; /* 밑줄과 텍스트 사이의 여백 */
 }
 .subTitle2 {
-    padding-left:140px;
+    display: inline-block; /* 텍스트 길이에 맞게 박스 크기 조정 */
+    margin-left:100px;
     margin-bottom: 30px;
+    border-bottom: 2px solid skyblue; /* 밑줄 적용 */
+    padding-bottom: 5px; /* 밑줄과 텍스트 사이의 여백 */
+}
+.hr {
+    width:60%;
+    border-color:rgb(114, 175, 212);
 }
