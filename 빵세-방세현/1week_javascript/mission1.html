@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="m1Style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body id="body">
+    <h1 id="title">UMC Study Plan</h1>
+    <br>
+    <br>
+    <hr class='hr'>
+    <div id="schedulebox">
+        <input id="textinput" type="text" placeholder="스터디 계획을 작성해보세요!"/>
+        <div id="scheduleList">
+            <div id="should">
+                <h3 class="toDoList">해야 할 일</h3>
+                <ul id="shouldList">
+
+                </ul>
+            </div>
+            <div id="complete">
+                <h3 class="doneList">해낸 일</h3>
+                <ul id='compList'>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 입력한 값 해야 할 일 리스트에 추가하는 함수
+        function getSchedule(e) {
+            // 코드내에서 변수가 재할당 및 업데이트 되는 부분이 없기 때문에 const로 선언해도 무방
+            const textinput = document.getElementById('textinput');
+            const shouldlist = document.getElementById('shouldList'); // 해야 할 일 ol 불러오기
+            const newList = document.createElement('li'); // 해야할 일에 들어갈 li
+            newList.className='nL';
+            const word = document.getElementById("textinput").value; // 입력한 계획 받아오기
+
+            if(e.key == 'Enter') {
+                newList.innerHTML = word;
+
+                const combutton = document.createElement('button');
+                combutton.className='comButton';
+                combutton.innerHTML='완료';
+
+                combutton.addEventListener('click', function() {
+                    completeWork(newList);
+                });
+
+                newList.appendChild(combutton);
+                shouldlist.appendChild(newList);
+                document.getElementById("textinput").value = ""; // 입력 필드 초기화
+            }
+        }
+
+        function completeWork(chooselist) {
+            const compList = document.createElement('li'); // 해낸 일 리스트
+            compList.className='cL';
+            const shouldParent = chooselist.parentElement; // 해야 할 일 ul (부모요소)
+            const compParent = document.getElementById('compList'); // 해낸 일 ul (부모요소)
+
+            const delbutton = document.createElement('button'); // 삭제버튼 생성
+                delbutton.className='delButton';
+                delbutton.innerHTML='삭제';
+
+            // 버튼의 텍스트를 삭제하기 위한 코드, substr() 함수 => 시작 index부터 지정된 문자수만큼 잘라내는 함수
+            const prevword = chooselist.innerText.substr(0,chooselist.innerText.length-2);
+    
+            compList.innerHTML = prevword; 
+            compList.appendChild(delbutton);
+
+            shouldParent.removeChild(chooselist); // 부모요소를 이용한 DOM 요소 삭제 방법
+            compParent.appendChild(compList);
+
+            delbutton.addEventListener('click',function() {
+                deleteWork(compList);
+            })
+        }
+
+        // 해낸 일 삭제하는 함수 
+        function deleteWork(chooselist) {
+            chooselist.remove(); // 요소 제거
+        }
+
+        document.getElementById('textinput').addEventListener('keydown',getSchedule);
+    </script>
+</body>
+</html>
