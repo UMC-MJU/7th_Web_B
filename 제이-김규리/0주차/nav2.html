@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice</title>
+    <style>
+      * {
+        font-size: 14px;
+      }
+      nav {
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .menu {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+        flex-grow: 1;
+        height: 40px;
+        padding-right: 1em;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .menu p {
+        margin: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+
+      .title {
+        font-weight: bold;
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .mode {
+        width: 9px;
+        height: 9px;
+        border: solid 2px;
+        border-radius: 50%;
+        box-sizing: border-box;
+      }
+
+      @media (max-width: 800px) {
+        * {
+          font-size: 11px;
+        }
+        .menu {
+          gap: 10px;
+          justify-content: space-around;
+        }
+        .title {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <img
+        src="https://www.smumc.co.kr/_next/image?url=%2Fimages%2Fmain-light-logo.webp&w=48&q=75"
+        alt="logo"
+        width="50"
+      />
+      <p class="title">SMUMC</p>
+      <div class="menu">
+        <p class="projects">PROJECTS</p>
+        <p class="members">MEMBERS</p>
+        <p class="notice">NOTICE</p>
+        <div class="mode"></div>
+      </div>
+    </nav>
+  </body>
+</html>
