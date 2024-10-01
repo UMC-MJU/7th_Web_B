@@ -1,0 +1,88 @@
+*{
+  font-family: Arial;
+  font-weight: 500;
+}
+#root{
+  border-radius: 30px;
+  width: 70%;
+  height: 1000px;
+  margin: 30px auto;
+  background-color: #ffd2d6;
+}
+form{
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+  margin: 0 10%;
+}
+h1{
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  padding-top: 40px;
+  font-size: 50px;
+  color: white;
+  font-weight: bold;
+}
+.items{
+  height: 3em;
+  margin: 20px 11%;
+  display: grid;
+  grid-template-columns: 8fr 1fr 1fr;
+  padding-left: 10px;
+  padding-bottom: 15px;
+  border-bottom: dashed #ffb1bd 3px;
+  border-radius: 3px;
+}
+button{
+  height: 30px;
+  margin: auto 5px;
+  background-color: #ffb1bd;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  font-size: 13px;
+  transition: all 0.3s ease 0s;
+}
+
+.submitButton{
+  height: 40px;
+  width: 60px;
+  font-size: 1em;
+}
+
+button:hover{
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+p{
+  font-weight: 600;
+  font-size: 1.3em;
+  margin: auto 0;
+  color: white;
+}
+.editInput{
+  width: 90%;
+  margin: 10px 0;
+  border: none;
+  color: lightgray;
+  font-size: 1em;
+  border-radius: 3px;
+}
+.editInput:focus{
+  outline: 3px solid #ffb1bd;
+}
+.mainInput{
+  height: 40px;
+  width: 100%;
+  border-radius: 4px;
+  border: none;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+::placeholder{
+  color: lightgray;
+}
+
