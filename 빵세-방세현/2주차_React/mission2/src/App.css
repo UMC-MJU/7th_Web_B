@@ -1,5 +1,5 @@
 .eachPoster {
-  width: 120px;
+  width: 130px;
   height: 180px;
   border: 1px solid black;
   border-radius: 5px;
@@ -7,7 +7,7 @@
 }
 
 .choosePoster {
-  width: 120px;
+  width: 130px;
   height: 180px;
   border: 1px solid black;
   border-radius: 5px;

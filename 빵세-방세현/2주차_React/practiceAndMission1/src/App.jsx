@@ -85,7 +85,12 @@ function App() {
                 onClick={() => updateTodo(editingId, editText)}
               ></EditComplete>
             ) : (
-              <EditIng onClick={() => setEditingId(todo.id)}></EditIng>
+              <EditIng
+                onClick={() => {
+                  setEditingId(todo.id);
+                  setEditText(todo.task);
+                }}
+              ></EditIng>
             )}
           </div>
         ))}
