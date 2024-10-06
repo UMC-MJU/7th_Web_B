@@ -25,4 +25,5 @@ const Screen = styled.div`
 const SidebarAndPage = styled.div`
   display: flex;
   flex-direction: row;
+  height: calc(100vh - 60px); /* 네비바 높이만큼 빼기 */
 `;
