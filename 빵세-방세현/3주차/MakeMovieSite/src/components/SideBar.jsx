@@ -18,6 +18,12 @@ const SideContainer = styled.div`
   flex-direction: column;
 `;
 
-const FindButton = styled(Link)``;
+const FindButton = styled(Link)`
+  text-decoration: none; /* 밑줄 제거 */
+  color: white;
+`;
 
-const MovieButton = styled(Link)``;
+const MovieButton = styled(Link)`
+  text-decoration: none; /* 밑줄 제거 */
+  color: white;
+`;
