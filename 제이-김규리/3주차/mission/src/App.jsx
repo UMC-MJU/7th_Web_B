@@ -7,6 +7,10 @@ import Search from "./pages/search.jsx";
 import Movies from "./pages/movies.jsx";
 import RootLayout from "./layout/root-layout";
 import styled, {createGlobalStyle} from "styled-components";
+import UpComingPage from "./pages/up-coming.jsx";
+import NowPlayingPage from "./pages/now-playing.jsx";
+import PopularPage from "./pages/popular.jsx";
+import TopRatedPage from "./pages/top-rated.jsx";
 
 
 const router = createBrowserRouter([
@@ -35,16 +39,36 @@ const router = createBrowserRouter([
       },
       {
         path: 'movies',
-        element: <Movies/>
-      }
+        element: <Movies/>,
+      },
+      {
+        path: 'movies/up-coming',
+        element: <UpComingPage/>
+      },
+      {
+        path: 'movies/now-playing',
+        element: <NowPlayingPage/>
+      },
+      {
+        path: 'movies/popular',
+        element: <PopularPage/>
+      },
+      {
+        path: 'movies/top-rated',
+        element: <TopRatedPage/>
+      },
     ]
   }
 ])
+
+
 const GlobalStyle = createGlobalStyle`
   body{
     background-color: black;
   }
 `;
+
+
 function App(){
   return (
     <>

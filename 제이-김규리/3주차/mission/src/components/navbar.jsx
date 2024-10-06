@@ -25,8 +25,8 @@ const Navbar = () => {
             <StyledNavbarButton>
                 <StyledLink to={'/login'}>로그인</StyledLink>
             </StyledNavbarButton>
-            <StyledNavbarButton backgroundColor={'#e50914'}><
-                StyledLink to={'/sign-up'}>회원가입</StyledLink>
+            <StyledNavbarButton backgroundColor={'#e50914'}>
+                <StyledLink to={'/sign-up'}>회원가입</StyledLink>
             </StyledNavbarButton>
         </StyledNav>
     );
