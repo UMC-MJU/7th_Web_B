@@ -1,10 +1,10 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
-import MovieContainer from "../components/custom-movie/movie-container";
-import MovieCard from "../components/custom-movie/movie-card";
-import MovieImage from "../components/custom-movie/movie-image";
-import MovieTitle from "../components/custom-movie/movie-title";
-import MovieDate from "../components/custom-movie/movie-date";
+import MovieContainer from "../../../components/custom-movie/movie-container";
+import MovieCard from "../../../components/custom-movie/movie-card";
+import MovieImage from "../../../components/custom-movie/movie-image";
+import MovieTitle from "../../../components/custom-movie/movie-title";
+import MovieDate from "../../../components/custom-movie/movie-date";
 
 const TopRatedPage = () => {
     const [movies, setMovies] = useState([]);

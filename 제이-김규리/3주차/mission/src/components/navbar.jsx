@@ -11,6 +11,7 @@ const StyledNav = styled.nav`
     margin-bottom: 15px;
 `;
 const StyledYongchaLink = styled(Link)`
+    width: 95px;
     color: #e50914;
     font-size: 1.2em;
     text-decoration: none;

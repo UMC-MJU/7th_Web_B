@@ -10,6 +10,12 @@ const StyledNavbarButton = styled.button`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+
+    transition: opacity 0.2s ease;
+
+    &:hover{
+         opacity: 0.8;
+    }
 `;
 
 export default StyledNavbarButton;

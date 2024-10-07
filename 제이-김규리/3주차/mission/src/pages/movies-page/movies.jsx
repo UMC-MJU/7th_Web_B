@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import StyledTxt from "../components/custom-Txt";
+import StyledTxt from "../../components/custom-Txt";
 import {Link} from "react-router-dom";
 
 const StyledImgLink = styled(Link)`
@@ -27,12 +27,12 @@ const StyledContainer = styled.div`
 `;
 
 const StyledImgContainer = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
 `;
 
 const OverlayText = styled.div`
-    position: absolute;
+    position: absolute; // 부모요소가 relative
     bottom: 5px; /* 부모 요소의 하단에서 10px 위로 이동 */
     left: 5px; 
     color: white;
