@@ -5,6 +5,7 @@ import LogInPage from "./components/LogInPage";
 import SignUpPage from "./components/SignUpPage";
 import FindPage from "./components/FindPage";
 import MoviePage from "./components/MoviePage";
+import Ex from "./components/Ex";
 import RootLayout from "./layout/root-layout";
 import NotFound from "./components/NotFound";
 const Router = createBrowserRouter([
@@ -37,6 +38,11 @@ const Router = createBrowserRouter([
         // 3. 부모의 path가 '/'이니, /를 붙이지 않아도 /movies랑 동일하게 동작한다.
         path: "movie",
         element: <MoviePage />,
+      },
+      {
+        // 3. 부모의 path가 '/'이니, /를 붙이지 않아도 /movies랑 동일하게 동작한다.
+        path: "ex",
+        element: <Ex />,
       },
     ],
   },
