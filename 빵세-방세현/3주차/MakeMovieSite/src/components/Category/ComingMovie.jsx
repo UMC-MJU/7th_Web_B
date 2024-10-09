@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import axios from "axios";
-import Card from "./Card";
-
+import Card from "./FrameComponent/Card";
+import MovieList from "./FrameComponent/MovieList";
 const ComingMovie = () => {
   const [movies, setMovies] = useState([]);
 
@@ -39,9 +38,3 @@ const ComingMovie = () => {
 };
 
 export default ComingMovie;
-
-const MovieList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 30px;
-`;
