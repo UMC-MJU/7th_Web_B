@@ -43,6 +43,5 @@ export default PopularMovie;
 const MovieList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 1300px;
   margin-top: 30px;
 `;

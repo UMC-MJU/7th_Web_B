@@ -26,7 +26,6 @@ const MoviePage = () => {
           subtitle="개봉 예정중인"
         />
       </CategoryList>
-      <Outlet />
     </Screen>
   );
 };
