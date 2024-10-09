@@ -18,7 +18,7 @@ const Card = ({ movie }) => {
       className={choosePoster === movie.id ? "choosePoster" : "eachPoster"}
       src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
       alt="영화 포스터"
-    ></img>
+    />
   );
 };
 

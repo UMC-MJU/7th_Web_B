@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     path: "/",
     // element: <HomePage></HomePage>,
     element: <RootLayout />,
-    errorElement: <NotFound></NotFound>,
+    errorElement: <NotFound />,
     // 1. Navbar 밑에 path에 해당하는 element를 보여주고 싶으면 아래와 같이 children을 활용
     children: [
       {
