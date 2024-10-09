@@ -11,9 +11,9 @@ const TopRatedPage = () => {
 
     useEffect(() => {
         const getMovies = async() => {
-            const movies = await axios.get(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200`, {
+            const movies = await axios.get(`https://api.themoviedb.org/3/movie/top_rated?language=ko-KR&page=1`, {
                 headers: {
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjEzNWM0ZTcxOGE0ZGZkNzY5ZDQyNmU4NzgyYzdkZSIsIm5iZiI6MTcyODI2NzM3OC44ODQyMDgsInN1YiI6IjY3MDBlYWQ5YzlhMTBkNDZlYTdjZmVlNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4iLIjgwDY9cLB1vbdBFpQrx9RtGBA3R87KJbQJ1gh64`,
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjEzNWM0ZTcxOGE0ZGZkNzY5ZDQyNmU4NzgyYzdkZSIsIm5iZiI6MTcyODQ2MDc5OS4xODg5NDIsInN1YiI6IjY3MDBlYWQ5YzlhMTBkNDZlYTdjZmVlNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.R3Ahq2PqWhv0O3uaxzQZcsvWRjFVHXJom63Q1qlhufk`,
                 }
             })
             setMovies(movies);
