@@ -8,7 +8,9 @@ const RootLayout = () => {
       <ApproachNavbar />
       <SidebarAndPage>
         <SideBar />
-        <Outlet />
+        <OutletWrapper>
+          <Outlet />
+        </OutletWrapper>
       </SidebarAndPage>
     </Screen>
   );
@@ -20,10 +22,20 @@ const Screen = styled.div`
   height: 100vh; /* 전체 화면 높이 */
   width: 100vw; /* 전체 화면 너비 */
   background-color: black;
+  overflow: auto; /* 내용이 넘칠 경우 스크롤 가능 */
 `;
 
 const SidebarAndPage = styled.div`
   display: flex;
   flex-direction: row;
   height: calc(100vh - 60px); /* 네비바 높이만큼 빼기 */
+  // flex-grow: 1;
+  overflow: auto;
 `;
+
+const OutletWrapper = styled.div`
+  // flex-grow: 1; /* Outlet의 크기에 따라 자동으로 크기 조정 */
+  overflow: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+  display: flex;
+`;
+// 비율 설정해야 함

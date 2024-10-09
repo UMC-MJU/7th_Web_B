@@ -3,8 +3,20 @@ import styled from "styled-components";
 import { Link } from "react-router-dom"; // Link를 import
 
 const CategoryButton = ({ src, alt, subtitle }) => {
+  let where = "";
+
+  if (alt === "ing") {
+    where = "/movie/now-playing";
+  } else if (alt === "popular") {
+    where = "/movie/popular";
+  } else if (alt === "good") {
+    where = "/movie/top-rated";
+  } else if (alt === "coming") {
+    where = "/movie/up-coming";
+  }
+
   return (
-    <InButton to={"/ex"}>
+    <InButton to={where}>
       <CategoryImage src={src} alt={alt}></CategoryImage>
       <Category>{subtitle}</Category>
     </InButton>

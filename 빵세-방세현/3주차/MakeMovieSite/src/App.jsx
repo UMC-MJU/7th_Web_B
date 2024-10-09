@@ -6,6 +6,10 @@ import SignUpPage from "./components/SignUpPage";
 import FindPage from "./components/FindPage";
 import MoviePage from "./components/MoviePage";
 import Ex from "./components/Ex";
+import IngMovie from "./components/Category/IngMovie";
+import PopularMovie from "./components/Category/PopularMovie";
+import GoodMovie from "./components/Category/GoodMovie";
+import ComingMovie from "./components/Category/ComingMovie";
 import RootLayout from "./layout/root-layout";
 import NotFound from "./components/NotFound";
 const Router = createBrowserRouter([
@@ -43,6 +47,22 @@ const Router = createBrowserRouter([
         // 3. 부모의 path가 '/'이니, /를 붙이지 않아도 /movies랑 동일하게 동작한다.
         path: "ex",
         element: <Ex />,
+      },
+      {
+        path: "movie/now-playing",
+        element: <IngMovie />,
+      },
+      {
+        path: "movie/popular",
+        element: <PopularMovie />,
+      },
+      {
+        path: "movie/top-rated",
+        element: <GoodMovie />,
+      },
+      {
+        path: "movie/up-coming",
+        element: <ComingMovie />,
       },
     ],
   },

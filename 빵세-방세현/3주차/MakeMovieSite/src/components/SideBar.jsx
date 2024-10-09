@@ -26,7 +26,6 @@ const SideContainer = styled.div`
   flex-direction: column;
   background-color: rgb(57, 53, 53);
   width: 200px;
-  //   height: 100%;
 `;
 
 const FindButton = styled(Link)`

@@ -6,6 +6,7 @@ import comingsoonImage from "../assets/images/coming-soon.jpg";
 
 import styled from "styled-components";
 import CategoryButton from "./CategoryButton";
+import { Outlet } from "react-router-dom";
 
 const MoviePage = () => {
   return (
@@ -16,15 +17,16 @@ const MoviePage = () => {
         <CategoryButton src={popularImage} alt="popular" subtitle="인기있는" />
         <CategoryButton
           src={starImage}
-          alt="popular"
+          alt="good"
           subtitle="높은 평가를 받은"
         />
         <CategoryButton
           src={comingsoonImage}
-          alt="popular"
+          alt="coming"
           subtitle="개봉 예정중인"
         />
       </CategoryList>
+      <Outlet />
     </Screen>
   );
 };
@@ -41,10 +43,9 @@ const Title = styled.h2`
   font-size: 35px;
   margin-left: 70px;
   margin-top: 15px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 const CategoryList = styled.div`
   display: flex;
-  margin-left: 20px;
 `;
