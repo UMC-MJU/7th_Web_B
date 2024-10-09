@@ -9,7 +9,7 @@ const StyledAside = styled.aside`
     flex-direction: column;
     width: 10%;
     height: 500px;
-    margin-right: 40px;
+    padding-right: 40px;
 `;
 
 const SideBar = () => {

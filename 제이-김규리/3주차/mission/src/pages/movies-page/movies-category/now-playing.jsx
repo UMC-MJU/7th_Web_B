@@ -2,9 +2,6 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import MovieContainer from "../../../components/custom-movie/movie-container";
 import MovieCard from "../../../components/custom-movie/movie-card";
-import MovieImage from "../../../components/custom-movie/movie-image";
-import MovieTitle from "../../../components/custom-movie/movie-title";
-import MovieDate from "../../../components/custom-movie/movie-date";
 
 const NowPlayingPage = () => {
     const [movies, setMovies] = useState([]);
@@ -24,14 +21,7 @@ const NowPlayingPage = () => {
     return (
         <MovieContainer>
             {movies.data?.results.map((movie) => (
-                <MovieCard key={movie.id} movie={movie}>
-                    <MovieImage 
-                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
-                        alt={movie.title} 
-                    />
-                    <MovieTitle>{movie.title}</MovieTitle>
-                    <MovieDate>{movie.release_date}</MovieDate>
-                </MovieCard>
+                <MovieCard key={movie.id} movie={movie}/>
             ))}
         </MovieContainer>
     );

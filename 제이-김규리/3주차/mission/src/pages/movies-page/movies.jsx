@@ -64,7 +64,6 @@ const Movies = () => {
                     <StyledImg src="https://images.unsplash.com/photo-1727976822548-d097770638f3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aG1lbnZRaFVteE18fGVufDB8fHx8fA%3D%3D"/>
                     <OverlayText>개봉 예정중인</OverlayText>
                 </StyledImgLink>
-                   
             </StyledImgContainer>
         </StyledContainer>
     );
