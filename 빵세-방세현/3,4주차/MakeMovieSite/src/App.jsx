@@ -60,7 +60,7 @@ const Router = createBrowserRouter([
         element: <ComingMovie />,
       },
       {
-        path: "movie/:id",
+        path: "movie/:movieId",
         element: <ParticularPage></ParticularPage>,
       },
     ],

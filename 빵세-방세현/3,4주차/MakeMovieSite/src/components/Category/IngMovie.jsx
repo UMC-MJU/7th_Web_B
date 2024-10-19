@@ -24,6 +24,7 @@ const IngMovie = () => {
       </div>
     );
   }
+
   return (
     <MovieList>
       {movies.data?.results.map((movie) => {
