@@ -11,6 +11,7 @@ import GoodMovie from "./components/Category/GoodMovie";
 import ComingMovie from "./components/Category/ComingMovie";
 import RootLayout from "./layout/root-layout";
 import NotFound from "./components/NotFound";
+import ParticularPage from "./components/Category/ParticularPage";
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -57,6 +58,10 @@ const Router = createBrowserRouter([
       {
         path: "movie/up-coming",
         element: <ComingMovie />,
+      },
+      {
+        path: "movie/:id",
+        element: <ParticularPage></ParticularPage>,
       },
     ],
   },
