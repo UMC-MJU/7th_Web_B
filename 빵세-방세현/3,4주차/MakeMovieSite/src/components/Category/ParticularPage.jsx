@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import useDetailMovie from "../../hooks/useDetailMovie";
+import useCreditMovie from "../../hooks/useCreditMovie";
+import MovieList from "./FrameComponent/MovieList";
 const ParticularPage = () => {
   const { movieId } = useParams();
 
@@ -11,9 +13,12 @@ const ParticularPage = () => {
     isError,
   } = useDetailMovie(`movie/${movieId}?language=ko`); // 커스텀 훅 다시 만들어야 함. 데이터를 받을 때 구조 틀린 것 같음.!
 
-  console.log(movies);
+  const { creditData, isLoading2, isError2 } = useCreditMovie(
+    `movie/${movieId}/credits?language=ko`
+  );
+  console.log(creditData);
 
-  if (isLoading) {
+  if (isLoading || isLoading2) {
     return (
       <div>
         <h1 style={{ color: "white" }}>로딩 중 입니다...</h1>
@@ -21,7 +26,7 @@ const ParticularPage = () => {
     );
   }
 
-  if (isError) {
+  if (isError || isError2) {
     return (
       <div>
         <h1 style={{ color: "white" }}>에러 중...</h1>
@@ -39,6 +44,7 @@ const ParticularPage = () => {
   }
 
   const imageUrl = `https://image.tmdb.org/t/p/w500${movies.backdrop_path}`;
+
   return (
     <DetailPage>
       <MovieImg src={imageUrl}></MovieImg>
@@ -50,6 +56,19 @@ const ParticularPage = () => {
         <TagLine>{movies.tagline}</TagLine>
         <Overview>{movies.overview}</Overview>
       </Introduce>
+      <MovieList>
+        {creditData?.map((creditInfor) => {
+          return (
+            <CreditCard>
+              <CreditImg
+                src={`https://image.tmdb.org/t/p/w200${creditInfor.profile_path}`}
+              ></CreditImg>
+              <ActorName>{creditInfor.original_name}</ActorName>
+              <InMovieName>{creditInfor.character}</InMovieName>
+            </CreditCard>
+          );
+        })}
+      </MovieList>
     </DetailPage>
   );
 };
@@ -99,4 +118,32 @@ const Overview = styled.div`
   color: white;
   font-size: 16px;
   margin-top: 10px;
+`;
+
+const CreditCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 250px;
+  border: 1px solid black;
+  margin-right: 30px;
+  margin-bottom: 20px;
+`;
+
+const CreditImg = styled.img`
+  width: 200px;
+  height: 150px;
+  border: 1px solid white;
+  border-radius: 40%;
+  object-fit: cover; // 잘릴 때 이미지 비율 유지
+`;
+
+const ActorName = styled.div`
+  color: white;
+  font-size: 20px;
+`;
+
+const InMovieName = styled.div`
+  color: white;
+  font-size: 15px;
 `;
