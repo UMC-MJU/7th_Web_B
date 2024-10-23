@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import useDetailMovie from "../../hooks/useDetailMovie";
 import useCreditMovie from "../../hooks/useCreditMovie";
 import MovieList from "./FrameComponent/MovieList";
+import MovieIntro from "./FrameComponent/MovieIntro";
+import CharacterProfile from "./FrameComponent/CharacterProfile";
 const ParticularPage = () => {
   const { movieId } = useParams();
 
@@ -48,26 +50,9 @@ const ParticularPage = () => {
   return (
     <DetailPage>
       <MovieImg src={imageUrl}></MovieImg>
-      <Introduce>
-        <Title>{movies.title}</Title>
-        <SmallIntro>평균: {movies.vote_average}</SmallIntro>
-        <SmallIntro>개봉: {movies.release_date}</SmallIntro>
-        <SmallIntro>{movies.runtime}분</SmallIntro>
-        <TagLine>{movies.tagline}</TagLine>
-        <Overview>{movies.overview}</Overview>
-      </Introduce>
+      <MovieIntro movies={movies}></MovieIntro>
       <MovieList>
-        {creditData?.map((creditInfor) => {
-          return (
-            <CreditCard>
-              <CreditImg
-                src={`https://image.tmdb.org/t/p/w200${creditInfor.profile_path}`}
-              ></CreditImg>
-              <ActorName>{creditInfor.original_name}</ActorName>
-              <InMovieName>{creditInfor.character}</InMovieName>
-            </CreditCard>
-          );
-        })}
+        <CharacterProfile creditData={creditData} />
       </MovieList>
     </DetailPage>
   );
@@ -82,68 +67,8 @@ const DetailPage = styled.div`
   width: 100vw; // 너비를 100%로 설정
   height: 100vh;
 `;
-const Title = styled.h2`
-  font-size: 40px;
-  color: white;
-`;
-const Msg = styled.div`
-  color: white;
-`;
 const MovieImg = styled.img`
   width: 100%;
   max-height: 50vh; // 최대 높이를 70vh로 설정하여 화면을 넘어가지 않도록 함
   object-fit: cover; // 이미지 비율을 유지하며 잘리도록 설정
-`;
-
-const Introduce = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-`;
-
-const SmallIntro = styled.div`
-  color: white;
-  font-size: 16px;
-`;
-
-const TagLine = styled.div`
-  color: white;
-  font-size: 25px;
-  margin-top: 10px;
-  font-style: italic;
-`;
-
-const Overview = styled.div`
-  color: white;
-  font-size: 16px;
-  margin-top: 10px;
-`;
-
-const CreditCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  height: 250px;
-  border: 1px solid black;
-  margin-right: 30px;
-  margin-bottom: 20px;
-`;
-
-const CreditImg = styled.img`
-  width: 200px;
-  height: 150px;
-  border: 1px solid white;
-  border-radius: 40%;
-  object-fit: cover; // 잘릴 때 이미지 비율 유지
-`;
-
-const ActorName = styled.div`
-  color: white;
-  font-size: 20px;
-`;
-
-const InMovieName = styled.div`
-  color: white;
-  font-size: 15px;
 `;
