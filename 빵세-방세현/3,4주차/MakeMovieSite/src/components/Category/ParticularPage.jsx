@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import useDetailMovie from "../../hooks/useDetailMovie";
 import useCreditMovie from "../../hooks/useCreditMovie";
 import MovieList from "./FrameComponent/MovieList";
 import MovieIntro from "./FrameComponent/MovieIntro";
 import CharacterProfile from "./FrameComponent/CharacterProfile";
+import useCustomFetch from "../../hooks/useCustomFetch";
 const ParticularPage = () => {
   const { movieId } = useParams();
 
@@ -13,8 +13,9 @@ const ParticularPage = () => {
     data: movies,
     isLoading,
     isError,
-  } = useDetailMovie(`movie/${movieId}?language=ko`); // 커스텀 훅 다시 만들어야 함. 데이터를 받을 때 구조 틀린 것 같음.!
+  } = useCustomFetch(`movie/${movieId}`); // 커스텀 훅 다시 만들어야 함. 데이터를 받을 때 구조 틀린 것 같음.!
 
+  console.log(movies);
   const { creditData, isLoading2, isError2 } = useCreditMovie(
     `movie/${movieId}/credits?language=ko`
   );
@@ -28,7 +29,7 @@ const ParticularPage = () => {
     );
   }
 
-  if (isError || isError2) {
+  if (isError || isError2 || !movies?.data) {
     return (
       <div>
         <h1 style={{ color: "white" }}>에러 중...</h1>
@@ -45,7 +46,7 @@ const ParticularPage = () => {
     );
   }
 
-  const imageUrl = `https://image.tmdb.org/t/p/w500${movies.backdrop_path}`;
+  const imageUrl = `https://image.tmdb.org/t/p/w500${movies?.data?.backdrop_path}`;
 
   return (
     <DetailPage>

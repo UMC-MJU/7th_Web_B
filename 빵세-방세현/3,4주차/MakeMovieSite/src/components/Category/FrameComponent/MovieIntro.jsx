@@ -4,12 +4,12 @@ import styled from "styled-components";
 const MovieIntro = ({ movies }) => {
   return (
     <Introduce>
-      <Title>{movies.title}</Title>
-      <SmallIntro>평균: {movies.vote_average}</SmallIntro>
-      <SmallIntro>개봉: {movies.release_date}</SmallIntro>
-      <SmallIntro>{movies.runtime}분</SmallIntro>
-      <TagLine>{movies.tagline}</TagLine>
-      <Overview>{movies.overview}</Overview>
+      <Title>{movies.data.title}</Title>
+      <SmallIntro>평균: {movies.data.vote_average}</SmallIntro>
+      <SmallIntro>개봉: {movies.data.release_date}</SmallIntro>
+      <SmallIntro>{movies.data.runtime}분</SmallIntro>
+      <TagLine>{movies.data.tagline}</TagLine>
+      <Overview>{movies.data.overview}</Overview>
     </Introduce>
   );
 };
@@ -42,4 +42,5 @@ const Overview = styled.div`
   color: white;
   font-size: 16px;
   margin-top: 10px;
+  width: 800px;
 `;
