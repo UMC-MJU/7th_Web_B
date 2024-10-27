@@ -7,7 +7,7 @@ const IngMovie = () => {
     data: movies,
     isLoading,
     isError,
-  } = useCustomFetch("/movie/now_playing?language=ko&page=1");
+  } = useCustomFetch("/movie/now_playing");
 
   if (isLoading) {
     return (

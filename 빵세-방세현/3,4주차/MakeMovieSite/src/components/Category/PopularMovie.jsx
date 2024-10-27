@@ -4,11 +4,7 @@ import MovieList from "./FrameComponent/MovieList";
 import useCustomFetch from "../../hooks/useCustomFetch";
 
 const PopularMovie = () => {
-  const {
-    data: movies,
-    isLoading,
-    isError,
-  } = useCustomFetch("/movie/popular?language=ko&page=1");
+  const { data: movies, isLoading, isError } = useCustomFetch("/movie/popular");
 
   if (isLoading) {
     return (

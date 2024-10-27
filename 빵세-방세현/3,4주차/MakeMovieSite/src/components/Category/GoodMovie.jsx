@@ -7,7 +7,7 @@ const GoodMovie = () => {
     data: movies,
     isLoading,
     isError,
-  } = useCustomFetch("/movie/top_rated?language=ko&page=1");
+  } = useCustomFetch("/movie/top_rated");
 
   if (isLoading) {
     return (

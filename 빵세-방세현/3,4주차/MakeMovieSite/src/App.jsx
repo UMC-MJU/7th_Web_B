@@ -61,7 +61,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "movie/:movieId",
-        element: <ParticularPage></ParticularPage>,
+        element: <ParticularPage />,
       },
     ],
   },
