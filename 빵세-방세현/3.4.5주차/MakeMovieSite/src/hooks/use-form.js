@@ -19,7 +19,7 @@ export function useForm({ initialValue, validate }) {
   };
 
   const getTextInputProps = (name) => {
-    const value = values[name];
+    const value = values[name]; // 입력 필드에 현재 값 반영
     const onChange = (event) => handleChangeInput(name, event.target.value);
     const onBlur = () => handleBlur(name);
 

@@ -39,7 +39,7 @@ const LogInPage = () => {
       {login.errors.password && login.touched.password && (
         <ErrorText>{login.errors.password}</ErrorText>
       )}
-      <button onClick={handlePressLogin}>로그인</button>
+      <button>로그인</button>
     </Container>
   );
 };
