@@ -1,31 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import styled from "styled-components";
-
+import schema from "../schema/SignupSchema";
 const SignUpPage = () => {
-  const [touchEmail, setTouchEmail] = useState(false);
-  const [touchPassword, setTouchPassword] = useState(false);
-  const [touchPWCheck, setTouchPWCheck] = useState(false);
-
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("검증된 이메일을 입력해주세요.")
-      .required("이메일을 반드시 입력해주세요."),
-    password: yup
-      .string()
-      .min(8, "비밀번호는 8자 이상이어야 합니다.")
-      .max(16, "비밀번호는 16자 이하여야 합니다.")
-      .required("비밀번호를 반드시 입력해주세요."),
-    passwordCheck: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "비밀번호가 다릅니다.") // 다른 input의 입력값과 일치하는지 비교
-      .min(8, "비밀번호는 8자 이상이어야 합니다.")
-      .max(16, "비밀번호는 16자 이하여야 합니다.")
-      .required("비밀번호를 반드시 입력해주세요."),
+  const [touched, setTouched] = useState({
+    email: false,
+    password: false,
+    passwordCheck: false,
   });
 
   const {
@@ -37,16 +19,12 @@ const SignUpPage = () => {
     mode: "onChange", // mode 설정을 통해서 입력 중에도 유효성 검사를 실시
   });
 
-  const onBlurEmail = () => {
-    setTouchEmail(true);
+  const handleBlur = (name) => {
+    setTouched({
+      ...touched, // 기존 상태 유지
+      [name]: true,
+    });
   };
-  const onBlurPassword = () => {
-    setTouchPassword(true);
-  };
-  const onBlurPWCheck = () => {
-    setTouchPWCheck(true);
-  };
-
   const onSubmit = (data) => {
     // data는
     console.log("제출된 데이터", data);
@@ -54,34 +32,34 @@ const SignUpPage = () => {
 
   return (
     <Screen>
-      {/*handleSubmit이 onSubmit의 매개변수 안에 자동으로 폼 데이터를 넣어줌. */}
+      {/*handleSubmit이 onSubmit의 매개변수 안에 자동으로 폼 데이터를 넣어줌. 또, 유효성 검사 불통과 시 submit 차단*/}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <SignupMsg>회원가입 페이지</SignupMsg>;
         <Input
           type="email"
           placeholder="이메일을 입력해주세요!"
           {...register("email")}
-          onBlur={onBlurEmail}
+          onBlur={() => handleBlur("email")}
         ></Input>
-        {touchEmail && errors.email && (
+        {touched.email && errors.email && (
           <ErrorMsg>{errors.email.message}</ErrorMsg>
         )}
         <Input
           type="password"
           placeholder="비밀번호를 입력해주세요!"
           {...register("password")}
-          onBlur={onBlurPassword}
+          onBlur={() => handleBlur("password")}
         ></Input>
-        {touchPassword && errors.password && (
+        {touched.password && errors.password && (
           <ErrorMsg>{errors.password.message}</ErrorMsg>
         )}
         <Input
           type="passwordCheck"
           placeholder="비밀번호를 다시 입력해주세요!"
           {...register("passwordCheck")}
-          onBlur={onBlurPWCheck}
+          onBlur={() => handleBlur("passwordCheck")}
         ></Input>
-        {touchPWCheck && errors.passwordCheck && (
+        {touched.passwordCheck && errors.passwordCheck && (
           <ErrorMsg>{errors.passwordCheck.message}</ErrorMsg>
         )}
         <SubmitButton>제출</SubmitButton>
