@@ -26,7 +26,7 @@ const SignUpPage = () => {
     });
   };
   const onSubmit = (data) => {
-    // data는
+    // 데이터는 는 react-hook-form에서 관리
     console.log("제출된 데이터", data);
   };
 

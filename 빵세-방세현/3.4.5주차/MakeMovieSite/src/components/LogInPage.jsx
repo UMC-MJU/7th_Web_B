@@ -14,7 +14,6 @@ const LogInPage = () => {
     },
     validate: validateLogin,
   });
-  4;
 
   const handlePressLogin = () => {
     console.log(login.values.email, login.values.password);
@@ -39,7 +38,7 @@ const LogInPage = () => {
       {login.errors.password && login.touched.password && (
         <ErrorText>{login.errors.password}</ErrorText>
       )}
-      <button>로그인</button>
+      <button onClick={handlePressLogin}>로그인</button>
     </Container>
   );
 };
