@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import schema from "../schema/SignupSchema";
 const SignUpPage = () => {
+  const navigate = useNavigate();
+
   const [touched, setTouched] = useState({
     email: false,
     password: false,
@@ -25,9 +29,19 @@ const SignUpPage = () => {
       [name]: true,
     });
   };
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // 데이터는 는 react-hook-form에서 관리
-    console.log("제출된 데이터", data);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/auth/register",
+        data
+      );
+      console.log("제출된 데이터", response.data);
+      navigate("/login");
+    } catch (error) {
+      console.error("회원가입 실패:", error);
+      alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
