@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useForm } from "../hooks/use-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import { validateLogin } from "../utils/validate";
-
+import signupInstance from "../apis/signup-instance";
 const LogInPage = () => {
   const navigate = useNavigate();
 
@@ -21,13 +18,15 @@ const LogInPage = () => {
   const handlePressLogin = async (event) => {
     event.preventDefault(); // 폼 기본 제출 방지
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await signupInstance.post("/auth/login", {
         email: login.values.email, // use-form의 return값들 참고
         password: login.values.password,
       });
       localStorage.clear();
       localStorage.setItem("id", login.values.email); // 이메일 저장 (회원 이름으로 사용)
-      localStorage.setItem("token", response.data); // access / refresh 토큰 저장
+      localStorage.setItem("token", response.data.accessToken); // access토큰 저장
+      localStorage.setItem("refreshToken", response.data.refreshToken); // refresh토큰 저장
+      console.log(response.data);
       navigate("/movie"); // 영화페이지로 이동
     } catch (error) {
       console.error("로그인 실패:", error);
