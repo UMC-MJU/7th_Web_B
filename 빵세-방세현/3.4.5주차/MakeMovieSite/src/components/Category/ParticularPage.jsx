@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import useCreditMovie from "../../hooks/useCreditMovie";
-import MovieList from "./FrameComponent/MovieList";
-import MovieIntro from "./FrameComponent/MovieIntro";
-import CharacterProfile from "./FrameComponent/CharacterProfile";
+import MovieList from "../FrameComponent/MovieList";
+import MovieIntro from "../FrameComponent/MovieIntro";
+import CharacterProfile from "../FrameComponent/CharacterProfile";
 import useCustomFetch from "../../hooks/useCustomFetch";
 const ParticularPage = () => {
   const { movieId } = useParams();
