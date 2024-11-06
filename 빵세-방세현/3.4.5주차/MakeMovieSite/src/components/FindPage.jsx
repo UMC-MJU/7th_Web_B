@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import useCustomFetch from "../hooks/useCustomFetch";
 import MovieList from "./FrameComponent/MovieList";
 import Card from "./FrameComponent/Card";
+import CardSkeleton from "./SkeletonUI/CardSkeleton";
 
 const FindPage = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -40,7 +41,7 @@ const FindPage = () => {
    * 따라서 mq값을 넣어 검색 버튼을 눌렀을 시 화면이 바뀌도록 하여 UX적으로 나아지도록 함.
    */
   const url = `/search/movie?query=${mq}&include_adult=false&language=ko&page=1`;
-  const { data: movies, isLoading, isError } = useCustomFetch(url);
+  const { data: movies, isLoading, isError } = useCustomFetch(url); // url이 바뀌지 않으면 useCustomFetch도 발동 x
 
   return (
     <Screen>
@@ -53,16 +54,20 @@ const FindPage = () => {
         />
         <SearchButton onClick={handleSearchMovie}>검색</SearchButton>
       </Search>
-      {isError || movies?.data?.results.length ? (
+      {isLoading ? (
+        <MovieList>
+          {Array.from({ length: 18 }).map((_, index) => (
+            <CardSkeleton key={index} />
+          ))}
+        </MovieList>
+      ) : !isError && movies?.data?.results.length ? (
         <MovieList>
           {movies.data?.results.map((movie) => {
             return <Card key={movie.id} movie={movie} />;
           })}
         </MovieList>
       ) : (
-        <>
-          <ErrorMessage>{errorMessage}</ErrorMessage>
-        </>
+        <ErrorMessage>{errorMessage}</ErrorMessage>
       )}
     </Screen>
   );
