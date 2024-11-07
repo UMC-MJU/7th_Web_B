@@ -84,12 +84,11 @@ const Search = styled.div`
   display: flex;
   justify-content: space-between;
   flex=1;
-  height: 40px;
   margin: 20px;
 `;
 const SearchInput = styled.input`
-  height: 30px;
   flex: 1;
+  height: 40px;
   border-top-left-raduis: 5px;
   border-bottom-left-radius: 5px;
   border: 1px solid rgb(220, 220, 2);

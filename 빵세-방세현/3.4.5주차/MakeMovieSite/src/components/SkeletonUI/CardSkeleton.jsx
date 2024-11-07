@@ -25,13 +25,11 @@ const pulse = keyframes`
   }
 `;
 
-const Skeleton = styled.button`
+const Skeleton = styled.div`
   background-color: black;
   display: flex;
   flex-direction: column;
   width: 190px;
-  // justify-content: center;
-  align-items: center;
   border: 0px;
 `;
 const SkeletonImg = styled.div`
@@ -39,19 +37,24 @@ const SkeletonImg = styled.div`
   height: 180px;
   border: 1px solid black;
   border-radius: 5px;
-  // margin-left: 50px;
   animation: ${pulse} 0.3s infinite ease-in-out;
 `;
 
 const SkeletonTitle = styled.div`
-  //   color: white;
   font-size: 13px;
+  width: 100px;
+  height: 13px;
+  margin-top: 10px;
+  border-radius: 5px;
   animation: ${pulse} 0.3s infinite ease-in-out;
 `;
 
 const SkeletonDate = styled.div`
-  //   color: white;
   font-size: 12px;
+  width: 70px;
+  height: 13px;
+  margin-top: 10px;
   margin-bottom: 20px;
+  border-radius: 5px;
   animation: ${pulse} 0.3s infinite ease-in-out;
 `;
