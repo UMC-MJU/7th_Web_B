@@ -13,9 +13,18 @@ signupInstance.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
+      // refreshToken으로 토큰 갱신 요청
+      const refreshToken = localStorage.getItem("refreshToken");
+
+      // refreshToken이 null일 경우
+      if (!refreshToken) {
+        console.warn(
+          "Refresh token이 없습니다. 로그인 페이지로 리디렉션됩니다."
+        );
+        window.location.href = "/login";
+        return Promise.reject(error); // catch에서 오류를 감지하고 후속 처리
+      }
       try {
-        // refreshToken으로 토큰 갱신 요청
-        const refreshToken = localStorage.getItem("refreshToken");
         const response = await signupInstance.post(
           "/auth/token/access",
           {},

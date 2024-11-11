@@ -32,7 +32,7 @@ const FindPage = () => {
   };
 
   const handleSearchMovieWithKeyboard = (e) => {
-    if (e.key === "enter") {
+    if (e.key === "Enter") {
       handleSearchMovie();
     }
   };
@@ -89,7 +89,7 @@ const Search = styled.div`
 const SearchInput = styled.input`
   flex: 1;
   height: 40px;
-  border-top-left-raduis: 5px;
+  border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border: 1px solid rgb(220, 220, 2);
 `;
