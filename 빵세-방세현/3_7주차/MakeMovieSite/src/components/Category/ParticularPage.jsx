@@ -5,21 +5,34 @@ import useCreditMovie from "../../hooks/useCreditMovie";
 import MovieList from "../FrameComponent/MovieList";
 import MovieIntro from "../FrameComponent/MovieIntro";
 import CharacterProfile from "../FrameComponent/CharacterProfile";
-import useCustomFetch from "../../hooks/useCustomFetch";
+import { useQuery } from "@tanstack/react-query";
+import { useGetParticularMV } from "../../hooks/queries/useGetParticularMV";
+import { useGetCreditMV } from "../../hooks/queries/useGetCreditMV";
+
 const ParticularPage = () => {
   const { movieId } = useParams();
 
   const {
     data: movies,
-    isLoading,
+    isPending: isLoading,
     isError,
-  } = useCustomFetch(`movie/${movieId}`); // 커스텀 훅 다시 만들어야 함. 데이터를 받을 때 구조 틀린 것 같음.!
+  } = useQuery({
+    queryFn: () => useGetParticularMV({ movieId: movieId }),
+    queryKey: ["movies", "particular"],
+    cacheTime: 10000, // 10초
+    staleTime: 10000,
+  });
 
-  console.log(movies);
-  const { creditData, isLoading2, isError2 } = useCreditMovie(
-    `movie/${movieId}/credits?language=ko`
-  );
-  console.log(creditData);
+  const {
+    data: creditData,
+    isPending: isLoading2,
+    isError: isError2,
+  } = useQuery({
+    queryFn: () => useGetCreditMV({ movieId: movieId }),
+    queryKey: ["movies", "credit"],
+    cacheTime: 10000, // 10초
+    staleTime: 10000,
+  });
 
   if (isLoading || isLoading2) {
     return (
@@ -29,7 +42,7 @@ const ParticularPage = () => {
     );
   }
 
-  if (isError || isError2 || !movies?.data) {
+  if (isError || isError2 || !movies) {
     return (
       <div>
         <h1 style={{ color: "white" }}>에러 중...</h1>
@@ -46,14 +59,14 @@ const ParticularPage = () => {
     );
   }
 
-  const imageUrl = `https://image.tmdb.org/t/p/w500${movies?.data?.backdrop_path}`;
+  const imageUrl = `https://image.tmdb.org/t/p/w500${movies?.backdrop_path}`;
 
   return (
     <DetailPage>
       <MovieImg src={imageUrl}></MovieImg>
       <MovieIntro movies={movies}></MovieIntro>
       <MovieList>
-        <CharacterProfile creditData={creditData} />
+        <CharacterProfile creditData={creditData.cast} />
       </MovieList>
     </DetailPage>
   );
