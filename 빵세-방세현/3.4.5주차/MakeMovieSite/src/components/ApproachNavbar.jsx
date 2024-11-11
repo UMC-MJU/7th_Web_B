@@ -1,15 +1,34 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"; // Link 컴포넌트 import 추가
 import styled from "styled-components";
 
 const ApproachNavbar = () => {
+  const navigate = useNavigate();
+
+  // 로그아웃
+  const logout = () => {
+    localStorage.removeItem("id");
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+  const userEmail = localStorage.getItem("id");
+  const userName = userEmail ? userEmail.split("@")[0] : ""; // @을 기준으로 나누어 앞부분을 유저이름으로 설정
+
   return (
     <TopContainer>
       <LogoButton to={"/"}>YONGCHA</LogoButton>
-      <Authentication>
-        <LoginButton to={"/login"}>로그인</LoginButton>
-        <SignUpButton to={"/signup"}>회원가입</SignUpButton>
-      </Authentication>
+      {localStorage.getItem("token") === null ? (
+        <Authentication>
+          <LoginButton to={"/login"}>로그인</LoginButton>
+          <SignUpButton to={"/signup"}>회원가입</SignUpButton>
+        </Authentication>
+      ) : (
+        <Authentication>
+          <Guide>{userName}님 반갑습니다.</Guide>
+          <LogoutButton onClick={logout}>로그아웃</LogoutButton>
+        </Authentication>
+      )}
     </TopContainer>
   );
 };
@@ -68,4 +87,20 @@ const SignUpButton = styled(Link)`
   &: hover {
     background-color: rgb(227, 62, 90);
   }
+`;
+
+const Guide = styled.p`
+  color: white;
+`;
+
+const LogoutButton = styled.button`
+  font-size: 13px;
+  display: flex; /* flex를 사용하여 글씨 중앙 정렬 */
+  align-items: center;
+  justify-content: center;
+  color: white;
+  width: 60px;
+  border: 1px solid rgb(57, 53, 53);
+  border-radius: 10px;
+  background-color: rgb(227, 62, 90);
 `;

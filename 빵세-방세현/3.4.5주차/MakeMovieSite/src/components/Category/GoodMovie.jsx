@@ -1,6 +1,6 @@
 import React from "react";
-import Card from "./FrameComponent/Card";
-import MovieList from "./FrameComponent/MovieList";
+import Card from "../FrameComponent/Card";
+import MovieList from "../FrameComponent/MovieList";
 import useCustomFetch from "../../hooks/useCustomFetch";
 const GoodMovie = () => {
   const {

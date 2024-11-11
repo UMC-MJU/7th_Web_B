@@ -1,31 +1,30 @@
 import React from "react";
-import ingImage from "../assets/images/ing.jpg";
-import popularImage from "../assets/images/popular.jpeg";
-import starImage from "../assets/images/star.png";
-import comingsoonImage from "../assets/images/coming-soon.jpg";
+import ingMovie from "../assets/images/ingMovie.jpg";
+import popularMovie from "../assets/images/popularMovie.jpg";
+import goodMovie from "../assets/images/goodMovie.jpg";
+import comingsoonMovie from "../assets/images/comingMovie.jpg";
 
 import styled from "styled-components";
 import CategoryButton from "./CategoryButton";
-import { Outlet } from "react-router-dom";
 
 const MoviePage = () => {
   return (
     <Screen>
-      <Title>카테코리</Title>
+      <Title>Category</Title>
       <CategoryList>
         <CategoryButton
-          src={ingImage}
+          src={ingMovie}
           alt="now-playing"
           subtitle="현재 상영중인"
         />
-        <CategoryButton src={popularImage} alt="popular" subtitle="인기있는" />
+        <CategoryButton src={popularMovie} alt="popular" subtitle="인기있는" />
         <CategoryButton
-          src={starImage}
+          src={goodMovie}
           alt="top-rated"
           subtitle="높은 평가를 받은"
         />
         <CategoryButton
-          src={comingsoonImage}
+          src={comingsoonMovie}
           alt="up-coming"
           subtitle="개봉 예정중인"
         />
@@ -43,10 +42,10 @@ const Screen = styled.div`
 
 const Title = styled.h2`
   color: white;
-  font-size: 35px;
+  font-size: 45px;
   margin-left: 70px;
   margin-top: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 `;
 
 const CategoryList = styled.div`
