@@ -6,6 +6,8 @@ import SkeletonCard from "../../skeleton.jsx";
 import useGetMovies from "../../../hooks/queries/useGetMovies.js";
 import {useQuery} from "@tanstack/react-query"
 import { useGetInfiniteMovies } from "../../../hooks/queries/useGetInfiniteMovies.js";
+import {useInView} from "react-intersection-observer";
+import ClipLoader from "react-spinners/ClipLoader.js";
 
 const NowPlayingPage = () => {
     //const {data: movies, isLoading, isError} = useCustomFetch(`/movie/now_playing?language=ko-KR&page=1`);
@@ -18,7 +20,7 @@ const NowPlayingPage = () => {
 
 
     const {
-        data, 
+        data: movies, 
         isLoading, 
         isFetching, 
         hasNextPage, 
@@ -28,14 +30,24 @@ const NowPlayingPage = () => {
         error,
         isError
     } = useGetInfiniteMovies('now_playing');
-    console.log(data);
+    
+
+    const {ref, inView} = useInView({
+        threshold: 0,
+    });
+
+    useEffect(() => {
+        if(inView){
+            !isFetching && hasNextPage && fetchNextPage();
+        }
+    }, [inView, isFetching, hasNextPage, fetchNextPage])
     // isPending: 데이터를 불러오는 중, 데이터가 로딩중일때 isPending true
     // isLoading: 데이터를 불러오는 중이거나, 재시도 중 일때 true가 됨
-    /* if(isPending){
+    if(isPending){
         return (
             <MovieContainer>
-                {movies?.results?.map((movie) => (
-                    <SkeletonCard key={movie.id}/>
+                {[...Array(20)].map((_, idx) => (
+                    <SkeletonCard key={idx} />
                 ))}
             </MovieContainer>
         );
@@ -45,14 +57,32 @@ const NowPlayingPage = () => {
         return <div>
         <h1 style={{color: 'white'}}>에러 발생</h1>
     </div>
-    } */
+    }
     //console.log(movies.data);
     return (
-        <MovieContainer>
-           {/*  {movies?.results?.map((movie) => (
-                <MovieCard key={movie.id} movie={movie}/>
-            ))} */}
-        </MovieContainer>
+        <>
+            <MovieContainer>
+            {/*  {movies?.results?.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie}/>
+                ))} */}
+
+                {movies?.pages.map((page) => {
+                    return page.results.map((movie, _) => {
+                        return <MovieCard movie={movie} key={movie.id}/>
+                    })
+                })}
+                {isFetching && (
+                     <MovieContainer>
+                        {[...Array(5)].map((_, idx) => (
+                            <SkeletonCard key={idx} />
+                        ))}
+                    </MovieContainer>
+                )}
+            </MovieContainer>
+            <div ref={ref} style={{marginTop: '50px', display: 'flex', justifyContent: 'center', width: '100%'}}>
+                {isFetching && <ClipLoader color={'#fff'}/>}
+            </div>
+        </>
     );
 }
 
