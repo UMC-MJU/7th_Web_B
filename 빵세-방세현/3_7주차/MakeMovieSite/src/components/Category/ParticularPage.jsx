@@ -19,8 +19,6 @@ const ParticularPage = () => {
   } = useQuery({
     queryFn: () => useGetParticularMV({ movieId: movieId }),
     queryKey: ["movies", "particular"],
-    cacheTime: 10000, // 10초
-    staleTime: 10000,
   });
 
   const {
@@ -30,8 +28,6 @@ const ParticularPage = () => {
   } = useQuery({
     queryFn: () => useGetCreditMV({ movieId: movieId }),
     queryKey: ["movies", "credit"],
-    cacheTime: 10000, // 10초
-    staleTime: 10000,
   });
 
   if (isLoading || isLoading2) {
