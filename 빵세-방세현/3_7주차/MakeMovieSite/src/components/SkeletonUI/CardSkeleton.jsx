@@ -1,10 +1,11 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
+import Spinner from "../../assets/images/spinner1.gif";
 
 const CardSkeleton = () => {
   return (
     <Skeleton>
-      <SkeletonImg />
+      <SkeletonImg src={Spinner} />
       <SkeletonTitle />
       <SkeletonDate />
     </Skeleton>
@@ -32,12 +33,13 @@ const Skeleton = styled.div`
   width: 190px;
   border: 0px;
 `;
-const SkeletonImg = styled.div`
+const SkeletonImg = styled.img`
   width: 130px;
   height: 180px;
   border: 1px solid black;
   border-radius: 5px;
-  animation: ${pulse} 0.3s infinite ease-in-out;
+  // animation: ${pulse} 0.3s infinite ease-in-out;
+  background-color: white;
 `;
 
 const SkeletonTitle = styled.div`
@@ -46,7 +48,8 @@ const SkeletonTitle = styled.div`
   height: 13px;
   margin-top: 10px;
   border-radius: 5px;
-  animation: ${pulse} 0.3s infinite ease-in-out;
+  // animation: ${pulse} 0.3s infinite ease-in-out;
+  background-color: white;
 `;
 
 const SkeletonDate = styled.div`
@@ -56,5 +59,6 @@ const SkeletonDate = styled.div`
   margin-top: 10px;
   margin-bottom: 20px;
   border-radius: 5px;
-  animation: ${pulse} 0.3s infinite ease-in-out;
+  // animation: ${pulse} 0.3s infinite ease-in-out;
+  background-color: white;
 `;

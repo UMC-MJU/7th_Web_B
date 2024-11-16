@@ -12,6 +12,9 @@ import ComingMovie from "./components/Category/ComingMovie";
 import RootLayout from "./layout/root-layout";
 import NotFound from "./components/NotFound";
 import ParticularPage from "./components/Category/ParticularPage";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -67,8 +70,15 @@ const Router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 function App() {
-  return <RouterProvider router={Router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={Router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
