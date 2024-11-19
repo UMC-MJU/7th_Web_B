@@ -7,6 +7,9 @@ import axiosInstance from "../api/axiosInstance";
 import LoadingAni from "../animation/loadingAni";
 import ErrorAni from "../animation/errorAni";
 import backgroundImg from "../assets/images/note.jpeg";
+import { IoSearch } from "react-icons/io5";
+import { FaBookBookmark } from "react-icons/fa6";
+
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
 
@@ -93,14 +96,22 @@ const TodoList = () => {
   console.log(todos);
   return (
     <Screen>
-      <Title>UMC ToDoList</Title>
+      <TitleBox>
+        <BookIcon />
+        <Title>UMC ToDoList</Title>
+      </TitleBox>
+
       <Form onSubmit={addTodo}>
-        <Search
-          placeholder="제목 검색"
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        ></Search>
+        <SearchBox>
+          <SearchIcon />
+          <Search
+            placeholder="제목 검색"
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          ></Search>
+        </SearchBox>
+        <Write>글 작성</Write>
         <TitleInput
           placeholder="제목을 입력해주세요"
           type="text"
@@ -108,7 +119,7 @@ const TodoList = () => {
           onChange={(e) => setTitle(e.target.value)}
         ></TitleInput>
         <ContentInput
-          placeholder="내용을 입력해주세요"
+          placeholder="내용을 입력해주세요."
           type="text"
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -137,10 +148,15 @@ const Screen = styled.div`
   overflow-y: auto; // 세로 스크롤 가능
   background-image: url(${backgroundImg}); // 이미지 파일을 변수로 사용
   background-size: auto;
+  font-family: SejongGeulggot;
 `;
 
+const TitleBox = styled.div`
+  display: flex;
+`;
 const Title = styled.h1`
   color: black;
+  font-size: 60px;
   text-align: center;
 `;
 
@@ -149,10 +165,16 @@ const Form = styled.form`
   flex-direction: column;
   align-items: left;
 `;
+
+const SearchBox = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+`;
 const Search = styled.input`
   width: 150px;
   height: 25px;
   margin-bottom: 10px;
+  border: 2px solid black;
   border-radius: 5px;
 `;
 
@@ -160,14 +182,39 @@ const TitleInput = styled.input`
   width: 400px;
   height: 30px;
   margin-bottom: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
 `;
 
-const ContentInput = styled.input`
+const ContentInput = styled.textarea`
   width: 400px;
-  height: 30px;
+  height: 150px;
   margin-bottom: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
 `;
 
 const SubmitButton = styled.button`
   margin-bottom: 30px;
+  background-color: rgb(116, 195, 136);
+`;
+
+const SearchIcon = styled(IoSearch)`
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+`;
+
+const BookIcon = styled(FaBookBookmark)`
+  width: 45px;
+  height: 45px;
+  color: green;
+  padding-top: 50px;
+  margin-right: 10px;
+`;
+
+const Write = styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
 `;

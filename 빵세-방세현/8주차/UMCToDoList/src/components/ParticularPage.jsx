@@ -3,8 +3,13 @@ import styled from "styled-components";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
+import backgroundImg from "../assets/images/note.jpeg";
+import { useNavigate } from "react-router-dom";
+import { FaBookBookmark } from "react-icons/fa6";
 const ParticularPage = () => {
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   // 상세 페이지의 제목, 내용, 업데이트 날짜, 수행 여부 받을 useState 변수 선언
   const [content, setContent] = useState("");
@@ -61,6 +66,7 @@ const ParticularPage = () => {
       const response = await axiosInstance.delete(`/${id}`);
       console.log(response);
       getParticularData();
+      navigate("/"); // TodoList로 복귀
     } catch (error) {
       console.error("TodoList를 삭제하는 데 실패했습니다", error);
     }
@@ -92,24 +98,33 @@ const ParticularPage = () => {
 
   return (
     <Screen>
-      <Title>UMC ToDoList</Title>
+      <TitleBox>
+        <BookIcon />
+        <Title>UMC ToDoList</Title>
+      </TitleBox>
       <h2>Post Id:{id}</h2>
       {editId === id ? (
         <Contents>
-          <EditTitle
-            placeholder="제목 수정"
-            defaultValue={title}
-            onChange={(e) => {
-              setEditTitle(e.target.value);
-            }}
-          ></EditTitle>
-          <EditContent
-            placeholder="내용 수정"
-            defaultValue={content}
-            onChange={(e) => {
-              setEditContent(e.target.value);
-            }}
-          ></EditContent>
+          <TitleEditBox>
+            <div>제목: </div>
+            <EditTitle
+              placeholder="제목 수정"
+              defaultValue={title}
+              onChange={(e) => {
+                setEditTitle(e.target.value);
+              }}
+            ></EditTitle>
+          </TitleEditBox>
+          <ContentEditBox>
+            <div>내용:</div>
+            <EditContent
+              placeholder="내용 수정"
+              defaultValue={content}
+              onChange={(e) => {
+                setEditContent(e.target.value);
+              }}
+            ></EditContent>
+          </ContentEditBox>
           <EachContent>업데이트: {date}</EachContent>
           <CheckBox>
             <div>상태:</div>
@@ -132,7 +147,9 @@ const ParticularPage = () => {
       )}
       {editId === id ? (
         <ButtonBox>
-          <button onClick={() => editTodos(editId)}>수정완료</button>
+          <EditComplete onClick={() => editTodos(editId)}>
+            수정완료
+          </EditComplete>
         </ButtonBox>
       ) : (
         <ButtonBox>
@@ -148,9 +165,14 @@ const ParticularPage = () => {
 
 export default ParticularPage;
 
+const TitleBox = styled.div`
+  display: flex;
+`;
+
 const Title = styled.h1`
   color: black;
   text-align: center;
+  font-size: 60px;
 `;
 
 const Screen = styled.div`
@@ -160,12 +182,21 @@ const Screen = styled.div`
   width: 100vw; // 가로 크기 100%
   height: 100vh; // 세로 크기 100%
   overflow-y: auto; // 세로 스크롤 가능
+  background-image: url(${backgroundImg}); // 이미지 파일을 변수로 사용
+  font-family: SejongGeulggot;
 `;
 
 const Contents = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
+  width: 500px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  padding: 50px;
 `;
 
 const EachContent = styled.div`
@@ -179,10 +210,12 @@ const ButtonBox = styled.div`
 const EditButton = styled.button`
   margin-right: 10px;
   background-color: pink;
+  border: 1px solid black;
 `;
 
 const DeleteButton = styled.button`
   background-color: pink;
+  border: 1px solid black;
 `;
 
 const CheckBox = styled.div`
@@ -195,8 +228,32 @@ const CheckInput = styled.input`
 
 const EditTitle = styled.input`
   margin-bottom: 10px;
+  width: 300px;
+  margin-left: 10px;
 `;
 
-const EditContent = styled.input`
+const EditContent = styled.textarea`
   margin-bottom: 10px;
+  width: 300px;
+  margin-left: 10px;
+`;
+
+const TitleEditBox = styled.div`
+  display: flex;
+`;
+
+const ContentEditBox = styled.div`
+  display: flex;
+`;
+
+const BookIcon = styled(FaBookBookmark)`
+  width: 45px;
+  height: 45px;
+  color: green;
+  padding-top: 50px;
+  margin-right: 10px;
+`;
+const EditComplete = styled.button`
+  background-color: rgb(116, 195, 136);
+  border: 1px solid black;
 `;

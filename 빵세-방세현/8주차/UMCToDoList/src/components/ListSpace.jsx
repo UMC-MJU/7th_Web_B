@@ -77,20 +77,20 @@ const ListSpace = ({ todos, getTodo }) => {
           ></CheckInput>
           {editId === todo.id ? (
             <TitleAndContent>
-              <input
+              <EditTitle
                 placeholder="제목 수정"
                 defaultValue={todo.title}
                 onChange={(e) => {
                   setEditTitle(e.target.value);
                 }}
-              ></input>
-              <input
+              ></EditTitle>
+              <EditContent
                 placeholder="내용 수정"
                 defaultValue={todo.content}
                 onChange={(e) => {
                   setEditContent(e.target.value);
                 }}
-              ></input>
+              ></EditContent>
             </TitleAndContent>
           ) : (
             <TitleAndContent onClick={() => handleClickTodo(todo.id)}>
@@ -100,7 +100,9 @@ const ListSpace = ({ todos, getTodo }) => {
           )}
           {editId === todo.id ? (
             <ButtonBox>
-              <button onClick={() => editTodos(editId)}>수정완료</button>
+              <EditComplete onClick={() => editTodos(editId)}>
+                수정완료
+              </EditComplete>
             </ButtonBox>
           ) : (
             <ButtonBox>
@@ -134,6 +136,11 @@ const EachList = styled.div`
   margin-bottom: 15px;
   width: 450px;
   height: 80px;
+  background-color: white;
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const TitleAndContent = styled.div`
@@ -155,19 +162,33 @@ const Content = styled.div`
 `;
 
 const ButtonBox = styled.div`
-  margin-left: 20px;
+  margin-left: 40px;
   background-color: white;
 `;
 
 const EditButton = styled.button`
   margin-right: 10px;
   background-color: pink;
+  border: 1px solid black;
 `;
 
 const DeleteButton = styled.button`
   background-color: pink;
+  border: 1px solid black;
 `;
 
 const CheckInput = styled.input`
   margin-right: 25px;
+`;
+
+const EditTitle = styled.input`
+  margin-bottom: 8px;
+  width: 200px;
+`;
+
+const EditContent = styled.textarea``;
+
+const EditComplete = styled.button`
+  background-color: rgb(116, 195, 136);
+  margin-left: 25px;
 `;
