@@ -3,6 +3,8 @@ import axios from "axios";
 import styled from "styled-components";
 import ListSpace from "../components/ListSpace";
 import searchDebounce from "../debounce/searchDebounce";
+import { useQuery } from "@tanstack/react-query";
+import { useGetTodo } from "../queries/useGetTodo";
 import axiosInstance from "../api/axiosInstance";
 import LoadingAni from "../animation/loadingAni";
 import ErrorAni from "../animation/errorAni";
@@ -11,46 +13,23 @@ import { IoSearch } from "react-icons/io5";
 import { FaBookBookmark } from "react-icons/fa6";
 
 const TodoList = () => {
-  const [todos, setTodos] = useState([]);
-
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const [search, setSearch] = useState("");
   const debouncedSearchText = searchDebounce(search, 300); // debounce 구현
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  // todo 데이터 받아오는 함수
-  const getTodo = async (queryParams = {}) => {
-    try {
-      setIsLoading(true);
-
-      //   const datas = await axiosInstance.get("", {
-      //     params: queryParams,
-      //   });
-      //   console.log(datas);
-      //   if (datas.status === 200) {
-      //     setTodos(datas.data[0]);
-      //     setIsLoading(false);
-      //   }
-      // }
-      // 로딩 시 ui 확인을 위해 임의로 2초 딜레이
-      setTimeout(async () => {
-        const datas = await axiosInstance.get("", {
-          params: queryParams,
-        });
-        console.log(datas);
-        if (datas.status === 200) {
-          setTodos(datas.data[0]);
-          setIsLoading(false); // 로딩 완료 후 상태 변경
-        }
-      }, 2000); // 2초 딜레이
-    } catch (error) {
+  // todo 데이터 받아오기
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["todos", debouncedSearchText], // queryKey는 search 텍스트와 연결
+    queryFn: () => useGetTodo(debouncedSearchText), // debouncedSearchText를 그대로 전달
+    enabled: !!debouncedSearchText || debouncedSearchText === "", // 검색어가 없을 때도 전체 데이터 요청
+    onError: (error) => {
       console.error("TodoList를 불러오는 데 실패했습니다", error);
-      handleError();
-    }
-  };
+      handleError(); // 기존 에러 핸들러
+    },
+  });
+  console.log(data);
 
   const handleError = () => {
     setIsLoading(false);
@@ -72,7 +51,7 @@ const TodoList = () => {
         console.log("Todo added successfully:");
         // 성공적으로 추가된 후 입력 필드 초기화
 
-        getTodo();
+        refetch(); // 데이터를 다시 불러옴.
         setTitle("");
         setContent("");
       }
@@ -82,18 +61,12 @@ const TodoList = () => {
     }
   };
 
-  // 검색어가 변경되면 getTodo 호출
+  // 검색어가 변경되면 refetch 호출
   useEffect(() => {
-    if (debouncedSearchText) {
-      // 검색어가 있으면 필터링된 데이터를 가져옴
-      getTodo({ title: debouncedSearchText });
-    } else {
-      // 검색어가 없으면 전체 데이터를 가져옴
-      getTodo();
-    }
+    refetch();
   }, [debouncedSearchText]); // debouncedSearchText 변경 시마다 실행됨
 
-  console.log(todos);
+  console.log(data);
   return (
     <Screen>
       <TitleBox>
@@ -131,7 +104,7 @@ const TodoList = () => {
       ) : isError ? (
         <ErrorAni />
       ) : (
-        <ListSpace todos={todos} getTodo={getTodo} />
+        <ListSpace todos={data} />
       )}
     </Screen>
   );

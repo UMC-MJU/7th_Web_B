@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { useGetParticularTodo } from "../queries/useGetParticularTodo";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import backgroundImg from "../assets/images/note.jpeg";
@@ -26,29 +28,22 @@ const ParticularPage = () => {
   const [editChecked, setEditChecked] = useState(false);
 
   // 상세페이지 데이터 불러오는 함수
-  const getParticularData = async () => {
-    try {
-      const response = await axiosInstance.get(`/${id}`);
-      if (response.status === 200) {
-        console.log("상세 페이지 불러오기 성공");
-        console.log(response);
-        setTitle(response.data.title);
-        setContent(response.data.content);
-
-        // 날짜 형식 수정
-        const formattedDate = new Date(response.data.updatedAt)
-          .toISOString()
-          .split("T")[0];
-        setDate(formattedDate);
-        setChecked(response.data.checked);
-      }
-    } catch (error) {
-      console.error("상세 페이지 불러오기 실패", error);
-    }
-  };
+  const { data, refetch } = useQuery({
+    queryKey: ["particulartodos", id],
+    queryFn: () => useGetParticularTodo(id),
+  });
 
   useEffect(() => {
-    getParticularData();
+    if (data) {
+      setTitle(data.title);
+      setContent(data.content);
+      setDate(new Date(data.updatedAt).toISOString().split("T")[0]);
+      setChecked(data.checked);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    refetch();
   }, [id]);
 
   // 수정 전 기존 내용들을 유지하기 위함
@@ -65,7 +60,7 @@ const ParticularPage = () => {
     try {
       const response = await axiosInstance.delete(`/${id}`);
       console.log(response);
-      getParticularData();
+      refetch();
       navigate("/"); // TodoList로 복귀
     } catch (error) {
       console.error("TodoList를 삭제하는 데 실패했습니다", error);
@@ -84,7 +79,7 @@ const ParticularPage = () => {
       if (response.status === 200) {
         console.log("Todo patched successfully:");
         setEditId("");
-        getParticularData();
+        refetch();
       }
     } catch (error) {
       console.error("수정에 실패하였습니다.", error);

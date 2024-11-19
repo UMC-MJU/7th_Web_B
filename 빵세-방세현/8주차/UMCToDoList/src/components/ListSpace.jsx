@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
-const ListSpace = ({ todos, getTodo }) => {
+const ListSpace = ({ todos }) => {
   const navigate = useNavigate();
 
   const [editId, setEditId] = useState("");
