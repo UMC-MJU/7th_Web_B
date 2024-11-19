@@ -4,6 +4,9 @@ import styled from "styled-components";
 import ListSpace from "../components/ListSpace";
 import searchDebounce from "../debounce/searchDebounce";
 import axiosInstance from "../api/axiosInstance";
+import LoadingAni from "../animation/loadingAni";
+import ErrorAni from "../animation/errorAni";
+import backgroundImg from "../assets/images/note.jpeg";
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
 
@@ -13,19 +16,42 @@ const TodoList = () => {
   const [search, setSearch] = useState("");
   const debouncedSearchText = searchDebounce(search, 300); // debounce 구현
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   // todo 데이터 받아오는 함수
   const getTodo = async (queryParams = {}) => {
     try {
-      const datas = await axiosInstance.get("", {
-        params: queryParams,
-      });
-      console.log(datas);
-      if (datas.status === 200) {
-        setTodos(datas.data[0]);
-      }
+      setIsLoading(true);
+
+      //   const datas = await axiosInstance.get("", {
+      //     params: queryParams,
+      //   });
+      //   console.log(datas);
+      //   if (datas.status === 200) {
+      //     setTodos(datas.data[0]);
+      //     setIsLoading(false);
+      //   }
+      // }
+      // 로딩 시 ui 확인을 위해 임의로 2초 딜레이
+      setTimeout(async () => {
+        const datas = await axiosInstance.get("", {
+          params: queryParams,
+        });
+        console.log(datas);
+        if (datas.status === 200) {
+          setTodos(datas.data[0]);
+          setIsLoading(false); // 로딩 완료 후 상태 변경
+        }
+      }, 2000); // 2초 딜레이
     } catch (error) {
       console.error("TodoList를 불러오는 데 실패했습니다", error);
+      handleError();
     }
+  };
+
+  const handleError = () => {
+    setIsLoading(false);
+    setIsError(true);
   };
 
   // 새 리스트 추가 함수
@@ -49,6 +75,7 @@ const TodoList = () => {
       }
     } catch (error) {
       console.error("Error adding todo:", error);
+      handleError();
     }
   };
 
@@ -88,7 +115,13 @@ const TodoList = () => {
         ></ContentInput>
         <SubmitButton type="submit">ToDo 생성</SubmitButton>
       </Form>
-      <ListSpace todos={todos} getTodo={getTodo} />
+      {isLoading ? (
+        <LoadingAni />
+      ) : isError ? (
+        <ErrorAni />
+      ) : (
+        <ListSpace todos={todos} getTodo={getTodo} />
+      )}
     </Screen>
   );
 };
@@ -102,6 +135,8 @@ const Screen = styled.div`
   width: 100vw; // 가로 크기 100%
   height: 100vh; // 세로 크기 100%
   overflow-y: auto; // 세로 스크롤 가능
+  background-image: url(${backgroundImg}); // 이미지 파일을 변수로 사용
+  background-size: auto;
 `;
 
 const Title = styled.h1`
