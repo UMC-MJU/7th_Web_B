@@ -64,13 +64,13 @@ const NowPlayingPage = () => {
                 )}
             </MovieContainer>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', alignItems: 'center' }}>
-                <PaginationButton onClick={handlePrevious} disabled={page === 1}>
+                <PaginationButton onClick={handlePrevious} disabled={page === 1 || isFetching}>
                     이전
                 </PaginationButton>
                 <span style={{ color: 'white', fontSize: '18px', padding: '0 10px' }}>{page} 페이지</span>
                 <PaginationButton
                     onClick={handleNext}
-                    disabled={movies?.total_pages <= page}
+                    disabled={movies?.total_pages <= page || isFetching}
                 >
                     다음
                 </PaginationButton>
