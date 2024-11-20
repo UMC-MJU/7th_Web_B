@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import ListSpace from "../components/ListSpace";
 import searchDebounce from "../debounce/searchDebounce";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useGetTodo } from "../queries/useGetTodo";
-import axiosInstance from "../api/axiosInstance";
 import LoadingAni from "../animation/loadingAni";
 import ErrorAni from "../animation/errorAni";
 import backgroundImg from "../assets/images/note.jpeg";
 import { IoSearch } from "react-icons/io5";
 import { FaBookBookmark } from "react-icons/fa6";
+import { addTodo } from "../queries/toMutate";
 
 const TodoList = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
   const [search, setSearch] = useState("");
-  const debouncedSearchText = searchDebounce(search, 300); // debounce 구현
 
+  const debouncedSearchText = searchDebounce(search, 300); // debounce 구현
+  const QueryClient = useQueryClient();
   // todo 데이터 받아오기
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["todos", debouncedSearchText], // queryKey는 search 텍스트와 연결
+    queryKey: ["todos"], // queryKey는 search 텍스트와 연결
     queryFn: () => useGetTodo(debouncedSearchText), // debouncedSearchText를 그대로 전달
     enabled: !!debouncedSearchText || debouncedSearchText === "", // 검색어가 없을 때도 전체 데이터 요청
     onError: (error) => {
@@ -29,37 +28,28 @@ const TodoList = () => {
       handleError(); // 기존 에러 핸들러
     },
   });
-  console.log(data);
 
   const handleError = () => {
     setIsLoading(false);
     setIsError(true);
   };
 
-  // 새 리스트 추가 함수
-  const addTodo = async (e) => {
-    e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
-    const newTodo = {
-      title: title,
-      content: content,
-    };
-    try {
-      const response = await axiosInstance.post("", newTodo);
-      console.log("Response:", response); // 응답 출력
-
-      if (response.status === 201) {
-        console.log("Todo added successfully:");
-        // 성공적으로 추가된 후 입력 필드 초기화
-
-        refetch(); // 데이터를 다시 불러옴.
-        setTitle("");
-        setContent("");
-      }
-    } catch (error) {
+  // 새 리스트 추가
+  const { mutate: postTodoMutation } = useMutation({
+    mutationFn: () => addTodo(title, content),
+    onSuccess: (data) => {
+      console.log(data);
+      QueryClient.invalidateQueries({
+        queryKey: ["todos"],
+      });
+      setTitle("");
+      setContent("");
+    },
+    onError: (error) => {
       console.error("Error adding todo:", error);
       handleError();
-    }
-  };
+    },
+  });
 
   // 검색어가 변경되면 refetch 호출
   useEffect(() => {
@@ -74,7 +64,7 @@ const TodoList = () => {
         <Title>UMC ToDoList</Title>
       </TitleBox>
 
-      <Form onSubmit={addTodo}>
+      <Form onSubmit={postTodoMutation}>
         <SearchBox>
           <SearchIcon />
           <Search

@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../api/axiosInstance";
+import { deleteTodos, editTodos, editCheckbox } from "../queries/toMutate";
+
 const ListSpace = ({ todos }) => {
   const navigate = useNavigate();
 
@@ -10,16 +13,21 @@ const ListSpace = ({ todos }) => {
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
 
-  // 삭제 함수
-  const deleteTodos = async (id) => {
-    try {
-      const response = await axiosInstance.delete(`/${id}`);
-      console.log(response);
-      getTodo();
-    } catch (error) {
-      console.error("TodoList를 삭제하는 데 실패했습니다", error);
-    }
-  };
+  const QueryClient = useQueryClient();
+
+  // 삭제
+  const { mutate: deleteTodoMutation } = useMutation({
+    mutationFn: (id) => deleteTodos(id),
+    onSuccess: (response) => {
+      console.log("삭제 성공,", response);
+      QueryClient.invalidateQueries({
+        queryKey: ["todos"],
+      });
+    },
+    onError: (error) => {
+      console.error("삭제 실패,", error);
+    },
+  });
 
   // 수정 전 기존 내용들을 유지하기 위함
   const setEditTodos = (id, title, content) => {
@@ -29,42 +37,41 @@ const ListSpace = ({ todos }) => {
     setEditContent(content);
   };
 
-  // 수정 함수
-  const editTodos = async (id) => {
-    try {
-      const response = await axiosInstance.patch(`/${id}`, {
-        title: editTitle,
-        content: editContent,
+  // 수정
+  const { mutate: editTodoMutation } = useMutation({
+    // mutationFn은 단일 인자를 받는 함수여야 하므로 여러 인자를 전달할 때는 하나의 객체로 전달
+    mutationFn: ({ id, title, content }) => editTodos(id, title, content),
+    onSuccess: (response) => {
+      console.log("수정 성공,", response);
+      QueryClient.invalidateQueries({
+        queryKey: ["todos"],
       });
-      console.log(response);
-      if (response.status === 200) {
-        console.log("Todo patched successfully:");
-        setEditId("");
-        getTodo();
-      }
-    } catch (error) {
-      console.error("수정에 실패하였습니다.", error);
-    }
-  };
+      setEditId("");
+    },
+    onError: (error) => {
+      console.error("수정 실패,", error);
+    },
+  });
 
   // 상세 페이지 이동 함수
   const handleClickTodo = (id) => {
     navigate(`/todo/${id}`);
   };
 
-  const handleCheckbox = async (id, checkstate) => {
-    try {
-      const response = await axiosInstance.patch(`/${id}`, {
-        checked: !checkstate,
+  //체크 상태 수정 함수
+  const { mutate: editCheckboxMutation } = useMutation({
+    // mutationFn은 단일 인자를 받는 함수여야 하므로 여러 인자를 전달할 때는 하나의 객체로 전달 (매우 중요하다고 느낌.)
+    mutationFn: ({ id, checkState }) => editCheckbox(id, checkState),
+    onSuccess: (response) => {
+      console.log("체크박스 수정 성공,", response);
+      QueryClient.invalidateQueries({
+        queryKey: ["todos"],
       });
-      if (response.status === 200) {
-        console.log("체크 상태 변경 완료");
-        getTodo();
-      }
-    } catch (error) {
-      console.error("체크 상태 변경 실패", error);
-    }
-  };
+    },
+    onError: (error) => {
+      console.error("체크박스 수정 실패,", error);
+    },
+  });
 
   return (
     <TotalList>
@@ -73,20 +80,22 @@ const ListSpace = ({ todos }) => {
           <CheckInput
             type="checkbox"
             checked={todo.checked}
-            onChange={() => handleCheckbox(todo.id, todo.checked)}
+            onChange={() =>
+              editCheckboxMutation({ id: todo.id, checkState: todo.checked })
+            }
           ></CheckInput>
           {editId === todo.id ? (
             <TitleAndContent>
               <EditTitle
                 placeholder="제목 수정"
-                defaultValue={todo.title}
+                value={editTitle}
                 onChange={(e) => {
                   setEditTitle(e.target.value);
                 }}
               ></EditTitle>
               <EditContent
                 placeholder="내용 수정"
-                defaultValue={todo.content}
+                value={editContent}
                 onChange={(e) => {
                   setEditContent(e.target.value);
                 }}
@@ -100,7 +109,15 @@ const ListSpace = ({ todos }) => {
           )}
           {editId === todo.id ? (
             <ButtonBox>
-              <EditComplete onClick={() => editTodos(editId)}>
+              <EditComplete
+                onClick={() => {
+                  editTodoMutation({
+                    id: editId,
+                    title: editTitle,
+                    content: editContent,
+                  }); // mutationFn이 기대하는 매개변수는 객체이므로 동일한 구조로 보내주어야 함.
+                }}
+              >
                 수정완료
               </EditComplete>
             </ButtonBox>
@@ -111,7 +128,7 @@ const ListSpace = ({ todos }) => {
               >
                 수정
               </EditButton>
-              <DeleteButton onClick={() => deleteTodos(todo.id)}>
+              <DeleteButton onClick={() => deleteTodoMutation(todo.id)}>
                 삭제
               </DeleteButton>
             </ButtonBox>

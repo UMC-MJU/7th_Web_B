@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useGetParticularTodo } from "../queries/useGetParticularTodo";
 import { useParams } from "react-router-dom";
@@ -8,10 +7,14 @@ import axiosInstance from "../api/axiosInstance";
 import backgroundImg from "../assets/images/note.jpeg";
 import { useNavigate } from "react-router-dom";
 import { FaBookBookmark } from "react-icons/fa6";
+import { deletePartPage, editPartTodos } from "../queries/toMutate";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 const ParticularPage = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
+  const QueryClient = useQueryClient();
 
   // 상세 페이지의 제목, 내용, 업데이트 날짜, 수행 여부 받을 useState 변수 선언
   const [content, setContent] = useState("");
@@ -56,35 +59,37 @@ const ParticularPage = () => {
   };
 
   // 삭제 함수
-  const deleteTodos = async (id) => {
-    try {
-      const response = await axiosInstance.delete(`/${id}`);
-      console.log(response);
-      refetch();
-      navigate("/"); // TodoList로 복귀
-    } catch (error) {
-      console.error("TodoList를 삭제하는 데 실패했습니다", error);
-    }
-  };
+  const { mutate: deletePartMutation } = useMutation({
+    // mutationFn은 단일 인자를 받는 함수여야 하므로 여러 인자를 전달할 때는 하나의 객체로 전달
+    mutationFn: (id) => deletePartPage(id),
+    onSuccess: (response) => {
+      console.log("상세페이지 삭제 성공,", response);
+      QueryClient.invalidateQueries({
+        queryKey: ["particularpage", id],
+      });
+      navigate("/");
+    },
+    onError: (error) => {
+      console.error("상세페이지 삭제 실패,", error);
+    },
+  });
 
   // 수정 함수 (상세 페이지의 경우 체크 여부까지 함께 보내도록 구현)
-  const editTodos = async (id) => {
-    try {
-      const response = await axiosInstance.patch(`/${id}`, {
-        title: editTitle,
-        content: editContent,
-        checked: editChecked,
+  const { mutate: editPartMutation } = useMutation({
+    // mutationFn은 단일 인자를 받는 함수여야 하므로 여러 인자를 전달할 때는 하나의 객체로 전달
+    mutationFn: ({ id, editTitle, editContent, editChecked }) =>
+      editPartTodos(id, editTitle, editContent, editChecked),
+    onSuccess: (response) => {
+      console.log("상세페이지 수정 성공,", response);
+      QueryClient.invalidateQueries({
+        queryKey: ["particulartodos", id], // 상세페이지의 queryKey로 수행해야 함.
       });
-      console.log(response);
-      if (response.status === 200) {
-        console.log("Todo patched successfully:");
-        setEditId("");
-        refetch();
-      }
-    } catch (error) {
-      console.error("수정에 실패하였습니다.", error);
-    }
-  };
+      setEditId("");
+    },
+    onError: (error) => {
+      console.error("상세페이지 수정 실패,", error);
+    },
+  });
 
   const handleCheckbox = (checked) => {
     setChecked(!checked); // ui 즉시 변환을 위해
@@ -142,7 +147,16 @@ const ParticularPage = () => {
       )}
       {editId === id ? (
         <ButtonBox>
-          <EditComplete onClick={() => editTodos(editId)}>
+          <EditComplete
+            onClick={() =>
+              editPartMutation({
+                id: editId,
+                editTitle: editTitle,
+                editContent: editContent,
+                editChecked: editChecked,
+              })
+            }
+          >
             수정완료
           </EditComplete>
         </ButtonBox>
@@ -151,7 +165,9 @@ const ParticularPage = () => {
           <EditButton onClick={() => setEditTodos(id, title, content, checked)}>
             수정
           </EditButton>
-          <DeleteButton onClick={() => deleteTodos(id)}>삭제</DeleteButton>
+          <DeleteButton onClick={() => deletePartMutation(id)}>
+            삭제
+          </DeleteButton>
         </ButtonBox>
       )}
     </Screen>
