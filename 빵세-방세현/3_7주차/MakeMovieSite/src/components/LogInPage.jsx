@@ -77,7 +77,7 @@ export default LogInPage;
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
   align-items: center;
   width: 100%; // 전체 가로 너비를 차지
   margin: 0 auto; // 수평 방향 여백을 자동으로 설저해서 수평 가운데 정렬이 됨.
@@ -96,6 +96,7 @@ const Input = styled.input`
   }
 `;
 const Form = styled.form`
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -107,6 +108,7 @@ const ErrorText = styled.h1`
 `;
 const LoginMsg = styled.h2`
   color: white;
+  font-size: 30px;
 `;
 
 const SubmitButton = styled.button`

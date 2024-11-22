@@ -41,7 +41,7 @@ const TopContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: rgb(57, 53, 53);
-  height: 70px;
+  height: 75px;
 `;
 
 const Authentication = styled.div`
@@ -71,7 +71,6 @@ const LoginButton = styled(Link)`
   color: white;
   width: 60px;
   height: 30px;
-  // border: 1px solid black;
   border-radius: 10px;
   &: hover {
     background-color: black;

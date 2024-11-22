@@ -26,6 +26,7 @@ const MoviePage = () => {
     <Screen>
       <SlideBox>
         <SlideTitle>2024 개봉작</SlideTitle>
+        <Slide></Slide>
       </SlideBox>
       <Title>Category</Title>
       <CategoryList>
@@ -55,18 +56,22 @@ export default MoviePage;
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const Title = styled.h2`
   color: white;
   font-size: 30px;
-  margin-left: 70px;
+  margin-left: 50px;
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 
 const CategoryList = styled.div`
   display: flex;
+  justify-content: space-around;
+  // width: 100%;
+  padding-bottom: 50px;
 `;
 
 const SlideBox = styled.div`
@@ -81,4 +86,8 @@ const SlideTitle = styled.h2`
   color: white;
   margin-left: 50px;
   font-size: 35px;
+`;
+
+const Slide = styled.div`
+  height: 500px;
 `;

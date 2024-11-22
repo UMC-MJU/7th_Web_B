@@ -24,10 +24,10 @@ export default SideBar;
 const SideContainer = styled.div`
   display: flex;
   flex-direction: column;
-  // background-color: rgb(57, 53, 53);
   background-color: black;
   width: 200px;
-  border-right: 3px outset white;
+  height: 120px;
+  border-right: 3px solid white;
 `;
 
 const FindButton = styled(Link)`

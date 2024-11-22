@@ -46,13 +46,15 @@ const FindPage = () => {
   return (
     <Screen>
       <Search>
-        <SearchInput
-          placeholder="영화 제목을 입력해주세요..."
-          value={searchValue}
-          onChange={onChangeSearchValue}
-          onKeyDown={handleSearchMovieWithKeyboard}
-        />
-        <SearchButton onClick={handleSearchMovie}>검색</SearchButton>
+        <SearchBox>
+          <SearchInput
+            placeholder="영화 제목을 입력해주세요..."
+            value={searchValue}
+            onChange={onChangeSearchValue}
+            onKeyDown={handleSearchMovieWithKeyboard}
+          />
+          <SearchButton onClick={handleSearchMovie}>검색</SearchButton>
+        </SearchBox>
       </Search>
       {isLoading ? (
         <MovieList>
@@ -82,16 +84,18 @@ const Screen = styled.div`
 `;
 const Search = styled.div`
   display: flex;
-  justify-content: space-between;
-  flex=1;
-  margin: 20px;
+  justify-content: center;
+  margin-top: 20px;
+`;
+const SearchBox = styled.div`
+  display: flex;
 `;
 const SearchInput = styled.input`
-  flex: 1;
   height: 40px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border: 1px solid rgb(220, 220, 2);
+  width: 700px;
 `;
 
 const SearchButton = styled.button`
@@ -100,7 +104,7 @@ const SearchButton = styled.button`
   background-color: rgb(227, 62, 90);
   cursor: pointer;
   border: none;
-  border-top-right-raduis: 5px;
+  border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 `;
 
