@@ -28,7 +28,7 @@ const Screen = styled.div`
 const SidebarAndPage = styled.div`
   display: flex;
   flex-direction: row;
-  height: calc(100vh - 60px); /* 네비바 높이만큼 빼기 */
+  height: calc(100vh - 70px); /* 네비바 높이만큼 빼기 */
   overflow: auto;
 `;
 

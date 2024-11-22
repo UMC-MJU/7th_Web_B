@@ -24,8 +24,10 @@ export default SideBar;
 const SideContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: rgb(57, 53, 53);
+  // background-color: rgb(57, 53, 53);
+  background-color: black;
   width: 200px;
+  border-right: 3px outset white;
 `;
 
 const FindButton = styled(Link)`
@@ -34,9 +36,10 @@ const FindButton = styled(Link)`
   display: flex;
   align-items: center;
   gap: 3px;
-  margin-top: 15px;
+  margin-top: 25px;
   margin-bottom: 15px;
-  margin-left: 20px;
+  margin-left: 30px;
+  font-size: 20px;
 `;
 
 const MovieButton = styled(Link)`
@@ -45,5 +48,6 @@ const MovieButton = styled(Link)`
   display: flex;
   align-items: center;
   gap: 3px;
-  margin-left: 20px;
+  margin-left: 30px;
+  font-size: 20px;
 `;

@@ -41,7 +41,7 @@ const TopContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: rgb(57, 53, 53);
-  height: 60px;
+  height: 70px;
 `;
 
 const Authentication = styled.div`
@@ -51,15 +51,19 @@ const Authentication = styled.div`
 `;
 
 const LogoButton = styled(Link)`
-  font-size: 20px;
+  width: 150px;
+  font-size: 30px;
   font-weight: bold;
   color: rgb(227, 62, 90);
   text-decoration: none; /* 밑줄 제거 */
   margin-left: 15px;
+  background-color: black;
+  border: 1px solidblack;
+  border-radius: 10px;
 `;
 
 const LoginButton = styled(Link)`
-  font-size: 13px;
+  font-size: 15px;
   text-decoration: none; /* 밑줄 제거 */
   display: flex; /* flex를 사용하여 글씨 중앙 정렬 */
   align-items: center;
@@ -67,25 +71,25 @@ const LoginButton = styled(Link)`
   color: white;
   width: 60px;
   height: 30px;
-  border: 1px solid rgb(57, 53, 53);
+  // border: 1px solid black;
   border-radius: 10px;
   &: hover {
-    background-color: rgb(227, 62, 90);
+    background-color: black;
   }
 `;
 
 const SignUpButton = styled(Link)`
-  font-size: 13px;
+  font-size: 15px;
   text-decoration: none; /* 밑줄 제거 */
   display: flex; /* flex를 사용하여 글씨 중앙 정렬 */
   align-items: center;
   justify-content: center;
   color: white;
-  width: 60px;
-  border: 1px solid rgb(57, 53, 53);
+  width: 70px;
   border-radius: 10px;
+  background-color: rgb(227, 62, 90);
   &: hover {
-    background-color: rgb(227, 62, 90);
+    background-color: rgb(257, 82, 90);
   }
 `;
 

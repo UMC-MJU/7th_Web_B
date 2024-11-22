@@ -3,13 +3,30 @@ import ingMovie from "../assets/images/ingMovie.jpg";
 import popularMovie from "../assets/images/popularMovie.jpg";
 import goodMovie from "../assets/images/goodMovie.jpg";
 import comingsoonMovie from "../assets/images/comingMovie.jpg";
-
+import { useGetLatestMovies } from "../hooks/queries/useGetLatestMovies";
 import styled from "styled-components";
 import CategoryButton from "./CategoryButton";
+import { useQuery } from "@tanstack/react-query";
 
 const MoviePage = () => {
+  // 2024년 개봉 영화 불러오기
+  const {
+    isLoading,
+    isError,
+    data: movies,
+  } = useQuery({
+    queryKey: ["movies", "latest"],
+    queryFn: () => useGetLatestMovies(),
+    keepPreviousData: true,
+  });
+
+  console.log(movies);
+
   return (
     <Screen>
+      <SlideBox>
+        <SlideTitle>2024 개봉작</SlideTitle>
+      </SlideBox>
       <Title>Category</Title>
       <CategoryList>
         <CategoryButton
@@ -42,7 +59,7 @@ const Screen = styled.div`
 
 const Title = styled.h2`
   color: white;
-  font-size: 45px;
+  font-size: 30px;
   margin-left: 70px;
   margin-top: 15px;
   margin-bottom: 50px;
@@ -50,4 +67,18 @@ const Title = styled.h2`
 
 const CategoryList = styled.div`
   display: flex;
+`;
+
+const SlideBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: 30px;
+  // margin: 0 auto;
+`;
+
+const SlideTitle = styled.h2`
+  color: white;
+  margin-left: 50px;
+  font-size: 35px;
 `;
