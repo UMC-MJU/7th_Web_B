@@ -44,7 +44,7 @@ const Loader = styled.div`
   background: var(--c) 0 100% / 8px 30px, var(--c) 50% 100% / 8px 20px,
     var(--c) 100% 100% / 8px 10px;
   position: relative;
-  clip-path: inset(-100% 0);
+  clip-path: none;
   margin-top: 70px;
   &::before {
     content: "";
