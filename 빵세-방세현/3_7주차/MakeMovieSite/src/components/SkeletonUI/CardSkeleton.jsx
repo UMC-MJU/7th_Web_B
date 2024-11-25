@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import Spinner from "../../assets/images/spinner1.gif";
+import Spinner from "../../assets/images/spinner2.gif";
 
 const CardSkeleton = () => {
   return (

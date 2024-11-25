@@ -12,7 +12,6 @@ const Card = ({ movie }) => {
       },
     });
   };
-
   return (
     <Entire onClick={movieParticularPage}>
       <EachImage

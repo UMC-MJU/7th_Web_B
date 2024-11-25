@@ -14,7 +14,7 @@ const CategoryButton = ({ src, alt, subtitle }) => {
 export default CategoryButton;
 
 const InButton = styled(Link)`
-  margin-left: 40px;
+  // margin-left: 40px;
   position: relative;
   transition: transform 0.3s, box-shadow 0.3s;
 
@@ -37,8 +37,8 @@ const Category = styled.p`
   font-size: 18px;
 `;
 const CategoryImage = styled.img`
-  width: 280px;
-  height: 200px;
+  width: 17vw;
+  height: 30vh;
   border-radius: 15%;
   // margin-left: 50px;
 `;

@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import schema from "../schema/SignupSchema";
+import { useMutation } from "@tanstack/react-query";
+
 const SignUpPage = () => {
   const navigate = useNavigate();
 
@@ -29,25 +31,30 @@ const SignUpPage = () => {
       [name]: true,
     });
   };
-  const onSubmit = async (data) => {
-    // 데이터는 는 react-hook-form에서 관리
-    try {
+
+  const { mutate: submitSignUp } = useMutation({
+    mutationFn: async (data) => {
       const response = await axios.post(
         "http://localhost:3000/auth/register",
         data
       );
-      console.log("제출된 데이터", response.data);
+      return response;
+    },
+    onSuccess: (response) => {
+      console.log("회원가입 성공");
+      console.log(response.data);
       navigate("/login");
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error("회원가입 실패:", error);
       alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
+    },
+  });
 
   return (
     <Screen>
       {/*handleSubmit이 onSubmit의 매개변수 안에 자동으로 폼 데이터를 넣어줌. 또, 유효성 검사 불통과 시 submit 차단*/}
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(submitSignUp)}>
         <SignupMsg>회원가입 페이지</SignupMsg>;
         <Input
           type="email"
@@ -87,7 +94,7 @@ export default SignUpPage;
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
   align-items: center;
   width: 100%; // 전체 가로 너비를 차지
   margin: 0 auto; // 수평 방향 여백을 자동으로 설저해서 수평 가운데 정렬이 됨.
@@ -96,10 +103,12 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-top: 100px;
 `;
 
 const SignupMsg = styled.h2`
   color: white;
+  font-size: 30px;
 `;
 const Input = styled.input`
   margin: 10px 0;
