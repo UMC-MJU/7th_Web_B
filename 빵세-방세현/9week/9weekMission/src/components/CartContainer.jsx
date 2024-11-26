@@ -3,10 +3,9 @@ import CartItem from "./CartItem";
 import styled from "styled-components";
 import NavBar from "./NavBar";
 import { useDispatch } from "react-redux";
-import { clearCart } from "../features/cart/cartSlice";
+import { openModal } from "../features/modal/modalSlice";
 const CartContainer = () => {
   // Redux store에서 cartItems와 total을 가져옵니다.
-  // 42:57
   const { cartItems, total, amount } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
   console.log(cartItems);
@@ -28,7 +27,7 @@ const CartContainer = () => {
           <button
             className="btn clear-btn"
             onClick={() => {
-              dispatch(clearCart());
+              dispatch(openModal());
             }}
           >
             장바구니 초기화
