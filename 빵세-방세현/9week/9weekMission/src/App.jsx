@@ -1,19 +1,23 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import CartContainer from "./components/CartContainer";
-import { useDispatch, useSelector } from "react-redux";
-import { calculateTotals } from "./features/cart/cartSlice";
 import ModalPortal from "./components/ModalPortal";
 import Modal from "./components/Modal";
+import { cartStore } from "./store/cartstore";
+import { modalStore } from "./store/modalStore";
+import { useStore } from "zustand";
 function App() {
-  const dispatch = useDispatch();
-  const { cartItems } = useSelector((store) => store.cart);
-  const { isOpen } = useSelector((store) => store.modal);
-  console.log(isOpen);
+  const cartItems = useStore(cartStore, (state) => state.cartItems);
+  console.log(cartItems); // 상태 값 확인
+  const isOpen = useStore(modalStore, (state) => state.isOpen);
+  const calculateTotals = useStore(cartStore, (state) => state.calculateTotals);
 
   useEffect(() => {
-    dispatch(calculateTotals());
-  }, [cartItems, dispatch]);
+    if (Array.isArray(cartItems)) {
+      calculateTotals();
+    }
+  }, [cartItems]);
+
   return (
     <Screen>
       <CartContainer />

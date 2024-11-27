@@ -1,22 +1,30 @@
-import { useSelector } from "react-redux";
 import CartItem from "./CartItem";
 import styled from "styled-components";
 import NavBar from "./NavBar";
-import { useDispatch } from "react-redux";
-import { openModal } from "../features/modal/modalSlice";
+import { useStore } from "zustand"; // zustand의 기본 훅 사용
+import { cartStore } from "../store/cartstore";
+import { modalStore } from "../store/modalStore";
 const CartContainer = () => {
-  // Redux store에서 cartItems와 total을 가져옵니다.
-  const { cartItems, total, amount } = useSelector((store) => store.cart);
-  const dispatch = useDispatch();
+  const cartItems = useStore(cartStore, (state) => state.cartItems);
+  console.log(Array.isArray(cartItems)); // true일 경우 정상
   console.log(cartItems);
+  const total = useStore(cartStore, (state) => state.total);
+  const openModal = useStore(modalStore, (state) => state.openModal);
+  // console.log(cartItems);
+
+  // cartItems가 배열인지 확인하고, 그렇지 않으면 빈 배열을 사용
+  const validCartItems = Array.isArray(cartItems) ? cartItems : [];
+
   return (
     <Section className="cart">
       <NavBar />
       <Title>당신이 선택한 음반</Title>
       <div>
-        {cartItems.map((item) => {
-          return <CartItem key={item.id} {...item} />;
-        })}
+        {validCartItems.length === 0 ? (
+          <p>장바구니가 비어 있습니다.</p>
+        ) : (
+          validCartItems.map((item) => <CartItem key={item.id} {...item} />)
+        )}
       </div>
       <footer>
         <hr />
@@ -24,14 +32,14 @@ const CartContainer = () => {
           <h4>
             총 가격 <span>{total}원</span>
           </h4>
-          <button
+          <ResetButton
             className="btn clear-btn"
             onClick={() => {
-              dispatch(openModal());
+              openModal();
             }}
           >
             장바구니 초기화
-          </button>
+          </ResetButton>
         </BottomArea>
       </footer>
     </Section>
@@ -56,4 +64,10 @@ const BottomArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const ResetButton = styled.button`
+  background-color: skyblue;
+  font-weight: bold;
+  margin-bottom: 30px;
 `;

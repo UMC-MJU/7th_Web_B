@@ -1,12 +1,11 @@
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { ChevronUp, ChevronDown } from "../constants/icons";
-import { increase, decrease, removeItem } from "../features/cart/cartSlice";
-
+import { cartStore } from "../store/cartstore";
 // CartItem 컴포넌트는 id, title, singer, price, img 등을 props로 받습니다.
 const CartItem = ({ id, title, singer, price, img, amount }) => {
-  const dispatch = useDispatch();
-
+  const increase = cartStore((state) => state.increase);
+  const decrease = cartStore((state) => state.decrease);
+  const removeItem = cartStore((state) => state.removeItem);
   return (
     <Entire>
       <EachImage src={img} alt="음반 이미지" />
@@ -18,17 +17,17 @@ const CartItem = ({ id, title, singer, price, img, amount }) => {
         <SongPrice>₩ {price}</SongPrice>
       </SongInfor>
       <UpOrDown>
-        <UpButton onClick={() => dispatch(increase(id))}>
+        <UpButton onClick={() => increase(id)}>
           <ChevronUp color="green" />
         </UpButton>
         <div>{amount}</div>
         <DownButton
           onClick={() => {
             if (amount === 1) {
-              dispatch(removeItem(id));
+              removeItem(id);
               return;
             }
-            dispatch(decrease(id));
+            decrease(id);
           }}
         >
           <ChevronDown color="green" />

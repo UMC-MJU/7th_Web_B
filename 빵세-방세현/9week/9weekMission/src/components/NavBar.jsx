@@ -1,9 +1,9 @@
 import React from "react";
 import { CartIcon } from "../constants/icons";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { cartStore } from "../store/cartstore";
 const NavBar = () => {
-  const { amount } = useSelector((state) => state.cart);
+  const amount = cartStore((state) => state.amount);
   console.log(amount);
   return (
     <Nav>

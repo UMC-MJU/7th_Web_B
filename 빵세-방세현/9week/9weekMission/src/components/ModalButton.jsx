@@ -1,18 +1,18 @@
 import React from "react";
-import { clearCart } from "../features/cart/cartSlice";
-import { closeModal } from "../features/modal/modalSlice";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { modalStore } from "../store/modalStore";
+import { cartStore } from "../store/cartstore";
 
 const ModalButton = () => {
-  const dispatch = useDispatch();
+  const clearCart = cartStore((state) => state.clearCart);
+  const closeModal = modalStore((state) => state.closeModal);
 
   return (
     <ButtonBox>
       <Yes
         onClick={() => {
-          dispatch(clearCart());
-          dispatch(closeModal());
+          clearCart();
+          closeModal();
         }}
       >
         네
@@ -20,7 +20,7 @@ const ModalButton = () => {
       <No
         onClick={() => {
           // TODO: 모달도 꺼지는 상태를 연결
-          dispatch(closeModal());
+          closeModal();
         }}
       >
         아니오
