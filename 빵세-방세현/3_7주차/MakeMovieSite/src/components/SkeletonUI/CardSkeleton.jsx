@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import Spinner from "../../assets/images/spinner2.gif";
+import Spinner from "../../assets/images/Loading.gif";
 
 const CardSkeleton = () => {
   return (
@@ -39,7 +39,7 @@ const SkeletonImg = styled.img`
   border: 1px solid black;
   border-radius: 5px;
   // animation: ${pulse} 0.3s infinite ease-in-out;
-  background-color: white;
+  // background-color: white;
 `;
 
 const SkeletonTitle = styled.div`
@@ -49,7 +49,7 @@ const SkeletonTitle = styled.div`
   margin-top: 10px;
   border-radius: 5px;
   // animation: ${pulse} 0.3s infinite ease-in-out;
-  background-color: white;
+  // background-color: white;
 `;
 
 const SkeletonDate = styled.div`
@@ -60,5 +60,5 @@ const SkeletonDate = styled.div`
   margin-bottom: 20px;
   border-radius: 5px;
   // animation: ${pulse} 0.3s infinite ease-in-out;
-  background-color: white;
+  // background-color: white;
 `;
