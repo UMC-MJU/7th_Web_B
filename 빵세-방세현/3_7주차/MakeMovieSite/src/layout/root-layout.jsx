@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import ApproachNavbar from "../components/ApproachNavbar";
+import ApproachNavbar from "../components/ApproachNavbar.tsx";
 import styled from "styled-components";
 import SideBar from "../components/SideBar";
 const RootLayout = () => {
