@@ -32,10 +32,11 @@ const Skeleton = styled.div`
   flex-direction: column;
   width: 190px;
   border: 0px;
+  margin-left: 80px;
 `;
 const SkeletonImg = styled.img`
-  width: 130px;
-  height: 180px;
+  width: 90px;
+  height: 100px;
   border: 1px solid black;
   border-radius: 5px;
   // animation: ${pulse} 0.3s infinite ease-in-out;
