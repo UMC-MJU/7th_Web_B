@@ -3,22 +3,23 @@ import styled from "styled-components";
 import Card from "../FrameComponent/Card";
 import MovieList from "../FrameComponent/MovieList";
 import CardSkeleton from "../SkeletonUI/CardSkeleton";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getMovies } from "../../hooks/queries/getMovies";
 
-const PopularMovie = () => {
-  const [page, setPage] = useState(1);
+
+const IngMovie = () => {
+  const [page, setPage] = useState<number>(1);
 
   const {
     isLoading,
     isError,
     data: movies,
     isFetching,
-    isPreviousData,
+    isPlaceholderData
   } = useQuery({
-    queryKey: ["movies", "popular", page],
-    queryFn: () => getMovies({ category: "popular", pageParam: page }),
-    keepPreviousData: true,
+    queryKey: ["movies", "upcoming", page],
+    queryFn: () => getMovies({ category: "upcoming", pageParam: page }),
+    placeholderData: keepPreviousData
   });
 
   return (
@@ -51,15 +52,17 @@ const PopularMovie = () => {
         </PageCount>
         <NextButton
           page={page}
-          totalPage={movies?.total_pages}
+          // Nullish Coalescing Oprator : 왼쪽 피연산자가 null 또는 undefined일 경우 오른쪽 값을 반환
+          // 이를 통해 null값 혹은 undefined인 초기 상태 오류를 방지
+          totalPage={movies?.total_pages??0}
           onClick={() => {
-            if (!isPreviousData && page < movies?.total_pages) {
+            if (!isPlaceholderData && page < (movies?.total_pages??0)) {
               setPage((old) => old + 1);
             }
           }}
           // Disable the Next Page button until we know a next page is available
           disabled={
-            isPreviousData || page === movies?.total_pages || isFetching
+            isPlaceholderData || page === movies?.total_pages || isFetching
           }
         >
           다음
@@ -69,7 +72,7 @@ const PopularMovie = () => {
   );
 };
 
-export default PopularMovie;
+export default IngMovie;
 
 const PullScreen = styled.div`
   display: flex;
@@ -88,7 +91,10 @@ const Buttons = styled.div`
   justify-content: center;
 `;
 
-const PreviousButton = styled.button`
+// 중요!!!!!
+// Styled-components는 기본적으로 HTML 요소의 속성만 허용하므로 page와 같은 커스텀 속성은 타입을 정의해줘야 함. 
+// styled-components에서 < >는 제네릭 x
+const PreviousButton = styled.button<{page: number}>`
   color: white;
   width: 150px;
   height: 30px;
@@ -98,7 +104,7 @@ const PreviousButton = styled.button`
   border: 1px solid black;
 `;
 
-const NextButton = styled.button`
+const NextButton = styled.button<{page: number , totalPage:number}>`
   color: white;
   width: 150px;
   height: 30px;

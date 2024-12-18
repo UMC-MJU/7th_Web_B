@@ -12,8 +12,27 @@ import WatchaCard from "./FrameComponent/WatchaCard";
 import LoadingMv from "../assets/animation/LoadingMv";
 import { GrLinkNext } from "react-icons/gr";
 
+
+// 슬라이스에 들어갈 data type 정의
+type Results= Array<{
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}>;
+
 const MoviePage = () => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState<number>(0);
 
   // 2024년 개봉 영화 불러오기
   const {
@@ -21,13 +40,13 @@ const MoviePage = () => {
     isError,
     data: movies,
     refetch,
+    // usQuery에서 받아올 때 데이터 타입 지정해 줌.
   } = useQuery({
     queryKey: ["movies", "latest"],
     queryFn: () => useGetLatestMovies(),
-    keepPreviousData: true,
   });
 
-  const slides = [];
+  const slides:Results[] = [];
 
   if (movies?.results) {
     for (let i = 0; i < movies.results.length; i += 5) {

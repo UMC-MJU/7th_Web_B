@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import useCustomFetch from "../hooks/useCustomFetch";
+import useCustomFetch from "../hooks/useCustomFetch.ts";
 import MovieList from "./FrameComponent/MovieList";
 import Card from "./FrameComponent/Card";
 import CardSkeleton from "./SkeletonUI/CardSkeleton";
 
 const FindPage = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // 처음 검색 페이지에 들어왔을 때부터 오류메세지가 뜨는걸 방지
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>(""); // 처음 검색 페이지에 들어왔을 때부터 오류메세지가 뜨는걸 방지
   const navigate = useNavigate();
 
-  const onChangeSearchValue = (event) => {
+  const onChangeSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
@@ -31,7 +31,7 @@ const FindPage = () => {
     console.log("hi");
   };
 
-  const handleSearchMovieWithKeyboard = (e) => {
+  const handleSearchMovieWithKeyboard = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSearchMovie();
     }
@@ -62,9 +62,9 @@ const FindPage = () => {
             <CardSkeleton key={index} />
           ))}
         </MovieList>
-      ) : !isError && movies?.data?.results.length ? (
+      ) : !isError && movies?.results.length ? (
         <MovieList>
-          {movies.data?.results.map((movie) => {
+          {movies?.results.map((movie) => {
             return <Card key={movie.id} movie={movie} />;
           })}
         </MovieList>

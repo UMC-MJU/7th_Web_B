@@ -7,13 +7,13 @@ const ApproachNavbar = () => {
   const navigate = useNavigate();
 
   // 로그아웃
-  const logout = () => {
+  const logout = ():void => {
     localStorage.removeItem("id");
     localStorage.removeItem("token");
     navigate("/login");
   };
-  const userEmail = localStorage.getItem("id");
-  const userName = userEmail ? userEmail.split("@")[0] : ""; // @을 기준으로 나누어 앞부분을 유저이름으로 설정
+  const userEmail:string | null = localStorage.getItem("id");
+  const userName:string = userEmail ? userEmail.split("@")[0] : ""; // @을 기준으로 나누어 앞부분을 유저이름으로 설정
 
   return (
     <TopContainer>
