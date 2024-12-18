@@ -1,18 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, useLocation, useNavigate, Link, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import InfoContainer from "../info-container";
 import useGetDetail from "../../../hooks/queries/useGetDetail";
-
-interface Movie {
-  backdrop_path: string;
-  [key: string]: any;
-}
-
-interface DetailResponse {
-  movie: Movie;
-}
 
 interface StyledMenuProps {
   isActive: boolean;
@@ -50,13 +41,14 @@ const StyledMenu = styled.div<StyledMenuProps>`
   }
 `;
 
-const DetailPage: React.FC = () => {
-  const { movieId } = useParams<{ movieId: string }>();
+const DetailPage = () => {
+  const { movieId } = useParams();
+  const MvId = movieId ? parseInt(movieId, 10) : 0;
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useQuery<DetailResponse, Error>({
-    queryFn: () => useGetDetail({ movieId }),
+  const { data, isLoading, isError } = useQuery({
+    queryFn: () => useGetDetail(MvId),
     queryKey: ["movieDetail", movieId],
   });
 
@@ -83,7 +75,6 @@ const DetailPage: React.FC = () => {
   }
 
   const { movie } = data!;
-
   return (
     <div>
       <StyledBannerContainer>

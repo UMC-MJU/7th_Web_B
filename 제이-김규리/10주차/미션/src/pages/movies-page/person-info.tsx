@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const PersonContainer = styled.div`
@@ -29,7 +28,7 @@ interface PersonInfoProps {
   person: Person;
 }
 
-const PersonInfo: React.FC<PersonInfoProps> = ({ person }) => {
+const PersonInfo = ({ person }: PersonInfoProps) => {
   return (
     <PersonContainer>
       <PersonImg src={`https://image.tmdb.org/t/p/w300${person.profile_path}`} />

@@ -1,8 +1,7 @@
 // Skeleton.tsx
-import React from "react";
 import styled, { keyframes } from "styled-components";
 
-const SkeletonCard: React.FC = () => {
+const SkeletonCard = () => {
   return (
     <Skeleton>
       <SkeletonImg />

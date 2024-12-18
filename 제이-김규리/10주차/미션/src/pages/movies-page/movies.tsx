@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
-import StyledTxt from "../../components/custom-Txt";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../apis/axios-instance";
@@ -145,7 +144,7 @@ const useGetTrending = async (): Promise<TrendingMoviesResponse> => {
   return data;
 };
 
-const Movies: React.FC = () => {
+const Movies = () => {
   const { data: trendingMovies, isLoading, isError } = useQuery({
     queryFn: useGetTrending,
     queryKey: ["movies", "trending"],

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -43,7 +42,7 @@ const MovieTitle = styled.div`
   margin-top: 3px;
 `;
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+const MovieCard = ({ movie }: MovieCardProps) => {
   return (
     <StyledCardLink to={`/movies/${movie.id}`}>
       <MovieImage

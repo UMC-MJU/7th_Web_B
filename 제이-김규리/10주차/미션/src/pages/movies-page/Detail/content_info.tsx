@@ -1,35 +1,23 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import styled from "styled-components";
 import PersonInfo from "../person-info";
 import useGetDetail from "../../../hooks/queries/useGetDetail";
 
-interface Person {
+interface Person { 
+  name: string;
+  profile_path: string;
   id: number;
-  [key: string]: any;
+  character?: string;
+  job?: string;
 }
 
-interface Credits {
-  cast: Person[];
-  crew: Person[];
-}
+const ContentPage = () => {
+  const { movieId } = useParams();
+  const MvId = movieId ? parseInt(movieId, 10) : 0;
 
-interface Movie {
-  [key: string]: any;
-}
-
-interface DetailResponse {
-  movie: Movie;
-  credits: Credits;
-}
-
-const ContentPage: React.FC = () => {
-  const { movieId } = useParams<{ movieId: string }>();
-
-  const { data, isLoading, isError } = useQuery<DetailResponse, Error>({
-    queryFn: () => useGetDetail({ movieId }),
-    queryKey: ["movieDetail", movieId],
+  const { data, isLoading, isError } = useQuery({
+    queryFn: () => useGetDetail( MvId),
+    queryKey: ["movieDetail", MvId],
   });
 
   if (isLoading) {
@@ -48,7 +36,7 @@ const ContentPage: React.FC = () => {
     );
   }
 
-  const { movie, credits } = data!;
+  const { credits } = data!;
   const { cast, crew: director } = credits;
 
   return (

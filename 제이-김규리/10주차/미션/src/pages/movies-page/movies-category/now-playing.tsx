@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useGetInfiniteMovies } from "../../../hooks/queries/useGetInfiniteMovies";
 import { useInView } from "react-intersection-observer";
 import MovieContainer from "../../../components/custom-movie/movie-container";
@@ -8,6 +8,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 interface Movie {
   id: number;
+  title: string;
+  poster_path: string;
+  release_date: string;
   [key: string]: any;
 }
 
@@ -15,7 +18,7 @@ interface MoviePage {
   results: Movie[];
 }
 
-const NowPlayingPage: React.FC = () => {
+const NowPlayingPage = () => {
   const {
     data: movies,
     isLoading,

@@ -1,4 +1,3 @@
-import React from "react";
 import StyledTxt from "../components/custom-Txt";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -42,7 +41,7 @@ interface LoginFormValues {
   password: string;
 }
 
-const LoginPage: React.FC = () => {
+const LoginPage = () => {
   const schema = yup.object().shape({
     email: yup
       .string()

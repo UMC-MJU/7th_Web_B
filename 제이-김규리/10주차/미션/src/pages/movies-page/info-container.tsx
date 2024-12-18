@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const StyledContainer = styled.div`
@@ -58,7 +57,7 @@ interface InfoContainerProps {
   movie: Movie;
 }
 
-const InfoContainer: React.FC<InfoContainerProps> = ({ movie }) => {
+const InfoContainer = ({ movie }: InfoContainerProps) => {
   return (
     <StyledContainer>
       <MovieTitle>{movie.title}</MovieTitle>

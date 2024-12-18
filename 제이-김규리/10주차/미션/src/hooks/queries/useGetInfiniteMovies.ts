@@ -2,9 +2,15 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import useGetMovies from "./useGetMovies";
 
 interface Movie {
-  id: number;
   title: string;
-  [key: string]: any;
+  backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  runtime: number;
+  tagline: string;
+  overview: string;
+  id: number;
+  poster_path: string;
 }
 
 interface MoviesResponse {
@@ -14,9 +20,12 @@ interface MoviesResponse {
   total_results: number;
 }
 
-function useGetInfiniteMovies(category: string) {
+type Category = "popular" | "top_rated" | "upcoming" | "now_playing";
+
+
+function useGetInfiniteMovies(category: Category) {
   return useInfiniteQuery<MoviesResponse, Error>({
-    queryFn: ({ pageParam = 1 }) => useGetMovies({ category, pageParam }),
+    queryFn: ({ pageParam}) => useGetMovies({ category, pageParam}),
     queryKey: ["movies", category],
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {

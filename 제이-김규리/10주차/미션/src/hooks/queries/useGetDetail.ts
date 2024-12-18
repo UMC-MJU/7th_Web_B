@@ -2,19 +2,23 @@
 import axiosInstance from "../../apis/axios-instance";
 
 interface Movie {
-  id: number;
   title: string;
   backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  runtime: number;
+  tagline: string;
   overview: string;
-  [key: string]: any;
+  id: number;
+  poster_path: string;
 }
 
-interface Person {
-  id: number;
+interface Person { 
   name: string;
+  profile_path: string;
+  id: number;
   character?: string;
   job?: string;
-  [key: string]: any;
 }
 
 interface Credits {
@@ -27,7 +31,7 @@ interface DetailResponse {
   credits: Credits;
 }
 
-const useGetDetail = async ({ movieId }: { movieId: string }): Promise<DetailResponse> => {
+const useGetDetail = async ( movieId: number): Promise<DetailResponse> => {
   // 영화의 상세 정보 요청
   const { data: movieData } = await axiosInstance.get<Movie>(`/movie/${movieId}?language=ko-KR`);
 

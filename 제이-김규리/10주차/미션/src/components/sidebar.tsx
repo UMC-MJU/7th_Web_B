@@ -1,4 +1,3 @@
-import React from "react";
 import StyledLink from "./custom-Link";
 import styled from "styled-components";
 import StyledSidebarButton from "./custom-SidebarButton";
@@ -13,7 +12,7 @@ const StyledAside = styled.aside`
   padding-right: 40px;
 `;
 
-const SideBar: React.FC = () => {
+const SideBar = () => {
   return (
     <StyledAside>
       <StyledSidebarButton>

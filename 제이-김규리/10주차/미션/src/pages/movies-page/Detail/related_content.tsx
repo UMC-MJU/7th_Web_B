@@ -1,15 +1,20 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import styled from "styled-components";
 import useGetRecommendation from "../../../hooks/queries/useGetRecommendation";
 import MovieContainer from "../../../components/custom-movie/movie-container";
 import MovieCard from "../../../components/custom-movie/movie-card";
 import SkeletonCard from "../../skeleton";
 
 interface Movie {
+  title: string;
+  backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  runtime: number;
+  tagline: string;
+  overview: string;
   id: number;
-  [key: string]: any;
+  poster_path: string;
 }
 
 interface RecommendationResponse {
@@ -18,11 +23,12 @@ interface RecommendationResponse {
   };
 }
 
-const RelatedPage: React.FC = () => {
+const RelatedPage = () => {
   const { movieId } = useParams<{ movieId: string }>();
+  const MvId = movieId ? parseInt(movieId, 10) : 0;
 
   const { data, isLoading, isError, isFetching } = useQuery<RecommendationResponse, Error>({
-    queryFn: () => useGetRecommendation({ movieId }),
+    queryFn: () => useGetRecommendation(MvId),
     queryKey: ["movieRecommendation", movieId],
   });
 

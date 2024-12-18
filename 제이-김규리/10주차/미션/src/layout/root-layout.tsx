@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar";
 import SideBar from "../components/sidebar";
@@ -12,7 +11,7 @@ const OutletWrapper = styled.div`
   width: 90%;
 `;
 
-const RootLayout: React.FC = () => {
+const RootLayout = () => {
   return (
     <>
       <Navbar />

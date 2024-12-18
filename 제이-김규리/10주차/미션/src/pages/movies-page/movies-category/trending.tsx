@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import MovieContainer from "../../../components/custom-movie/movie-container";
 import MovieCard from "../../../components/custom-movie/movie-card";
@@ -7,13 +7,21 @@ import PaginationButton from "../../../components/pagination-button";
 import axiosInstance from "../../../apis/axios-instance";
 
 interface Movie {
+  title: string;
+  backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  runtime: number;
+  tagline: string;
+  overview: string;
   id: number;
-  [key: string]: any;
+  poster_path: string;
 }
 
 interface MoviesResponse {
   results: Movie[];
   total_pages: number;
+  page: number;
 }
 
 const useGetTrending = async ({ pageParam }: { pageParam: number }): Promise<MoviesResponse> => {
@@ -23,7 +31,7 @@ const useGetTrending = async ({ pageParam }: { pageParam: number }): Promise<Mov
   return data;
 };
 
-const TrendingPage: React.FC = () => {
+const TrendingPage = () => {
   const [page, setPage] = useState<number>(1);
 
   const {
@@ -32,12 +40,12 @@ const TrendingPage: React.FC = () => {
     isFetching,
     isError,
     error,
-  } = useQuery<MoviesResponse, Error>({
+  } = useQuery<MoviesResponse>({
     queryFn: () => useGetTrending({ pageParam: page }),
     queryKey: ["movies", "trending", page],
-    keepPreviousData: true,
   });
 
+  console.log(movies);
   const handlePrevious = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));
   };
@@ -65,11 +73,10 @@ const TrendingPage: React.FC = () => {
       </div>
     );
   }
-
   return (
     <>
       <MovieContainer>
-        {movies?.results.map((movie) => (
+        {movies?.results.map((movie: Movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
         {isFetching && (
@@ -94,8 +101,8 @@ const TrendingPage: React.FC = () => {
         <span style={{ color: "white", fontSize: "18px", padding: "0 10px" }}>{page} 페이지</span>
         <PaginationButton
           onClick={handleNext}
-          disabled={movies?.total_pages <= page || isFetching}
-        >
+          disabled={(movies?.total_pages ?? 0) <= page || isFetching}
+        > {/* movies?.total_page가 null 또는 undefined일 때 0을 반환 */}
           다음
         </PaginationButton>
       </div>

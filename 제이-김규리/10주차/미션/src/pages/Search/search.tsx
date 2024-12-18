@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent } from "react";
 import * as S from "./search.style";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useCustomFetch from "../../hooks/useCustomFetch";
@@ -6,11 +6,24 @@ import MovieContainer from "../../components/custom-movie/movie-container";
 import MovieCard from "../../components/custom-movie/movie-card";
 
 interface Movie {
+  title: string;
+  backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  runtime: number;
+  tagline: string;
+  overview: string;
   id: number;
-  [key: string]: any; // Define additional properties dynamically
+  poster_path: string;
+}
+interface SearchResponse {
+  results: Movie[];
+  page: number;
+  total_pages: number;
+  totla_results: number;
 }
 
-const Search: React.FC = () => {
+const Search = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const navigate = useNavigate();
 
@@ -36,8 +49,8 @@ const Search: React.FC = () => {
   };
 
   const url = `/search/movie?query=${searchQuery}&include_adult=false&language=ko-KR&page=1`;
-  const { data: movies, isLoading, isError } = useCustomFetch<{ data: { results: Movie[] } }>(url);
-
+  const { data: movies } = useCustomFetch<SearchResponse>(url);
+  console.log("search: ", movies);
   return (
     <>
       <S.SearchContainer>
@@ -50,8 +63,8 @@ const Search: React.FC = () => {
         <S.SearchButton onClick={handleSearchMovie}>검색</S.SearchButton>
       </S.SearchContainer>
       <MovieContainer>
-        {movies?.data?.results?.length > 0 ? (
-          movies.data.results.map((movie) => <MovieCard key={movie.id} movie={movie} />)
+        {(movies?.results?.length ?? 0) > 0 ? (
+          movies?.results.map((movie) => <MovieCard key={movie.id} movie={movie} />)
         ) : searchQuery ? (
           <p
             style={{

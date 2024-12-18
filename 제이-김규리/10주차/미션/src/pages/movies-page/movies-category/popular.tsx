@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useGetInfiniteMovies } from "../../../hooks/queries/useGetInfiniteMovies";
 import { useInView } from "react-intersection-observer";
 import MovieContainer from "../../../components/custom-movie/movie-container";
@@ -7,15 +7,22 @@ import SkeletonCard from "../../skeleton";
 import ClipLoader from "react-spinners/ClipLoader";
 
 interface Movie {
+  title: string;
+  backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  runtime: number;
+  tagline: string;
+  overview: string;
   id: number;
-  [key: string]: any;
+  poster_path: string;
 }
 
 interface MoviePage {
   results: Movie[];
 }
 
-const PopularPage: React.FC = () => {
+const PopularPage = () => {
   const {
     data: movies,
     isLoading,

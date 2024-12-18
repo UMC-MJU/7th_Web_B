@@ -1,4 +1,3 @@
-import React from "react";
 import StyledLink from "./custom-Link";
 import StyledNavbarButton from "./custom-NavbarButton";
 import styled from "styled-components";
@@ -21,7 +20,7 @@ const StyledYongchaLink = styled(Link)`
   font-weight: 500;
 `;
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   return (
     <StyledNav>
       <StyledYongchaLink to="/">YONGCHA</StyledYongchaLink>

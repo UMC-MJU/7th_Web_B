@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import MovieContainer from "../../../components/custom-movie/movie-container";
 import MovieCard from "../../../components/custom-movie/movie-card";
 import SkeletonCard from "../../skeleton";
@@ -6,7 +6,23 @@ import { useGetInfiniteMovies } from "../../../hooks/queries/useGetInfiniteMovie
 import { useInView } from "react-intersection-observer";
 import ClipLoader from "react-spinners/ClipLoader";
 
-const UpComingPage: React.FC = () => {
+interface Movie {
+  title: string;
+  backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  runtime: number;
+  tagline: string;
+  overview: string;
+  id: number;
+  poster_path: string;
+}
+
+interface MoviePage {
+  results: Movie[];
+}
+
+const UpComingPage = () => {
   const {
     data: movies,
     isLoading,
@@ -14,7 +30,6 @@ const UpComingPage: React.FC = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    error,
     isError,
   } = useGetInfiniteMovies("upcoming");
 
@@ -49,8 +64,8 @@ const UpComingPage: React.FC = () => {
   return (
     <>
       <MovieContainer>
-        {movies?.pages.map((page) =>
-          page.results.map((movie: { id: number }) => (
+        {movies?.pages.map((page: MoviePage) =>
+          page.results.map((movie: Movie) => (
             <MovieCard movie={movie} key={movie.id} />
           ))
         )}

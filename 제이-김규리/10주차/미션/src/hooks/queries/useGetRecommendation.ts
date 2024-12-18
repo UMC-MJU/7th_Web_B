@@ -4,18 +4,22 @@ import axiosInstance from "../../apis/axios-instance";
 interface RecommendationResponse {
   related: {
     results: Array<{
-      id: number;
       title: string;
-      [key: string]: any;
+      backdrop_path: string;
+      vote_average: number;
+      release_date: string;
+      runtime: number;
+      tagline: string;
+      overview: string;
+      id: number;
+      poster_path: string;
     }>;
   };
 }
 
-const useGetRecommendation = async ({
-  movieId,
-}: {
-  movieId: string;
-}): Promise<RecommendationResponse> => {
+type MvId = number;
+
+const useGetRecommendation = async (movieId: MvId): Promise<RecommendationResponse> => {
   const { data: relatedData } = await axiosInstance.get(`/movie/${movieId}/recommendations?language=ko-KR&page=1`);
 
   return { related: relatedData };

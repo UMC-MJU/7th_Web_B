@@ -1,4 +1,3 @@
-import React from "react";
 import StyledTxt from "../components/custom-Txt";
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -45,7 +44,7 @@ interface SignUpFormValues {
   passwordCheck: string;
 }
 
-const SignUpPage: React.FC = () => {
+const SignUpPage = () => {
   const navigate = useNavigate();
 
   const schema = yup.object().shape({
@@ -61,7 +60,7 @@ const SignUpPage: React.FC = () => {
     passwordCheck: yup
       .string()
       .required("비밀번호 검증 또한 필수 입력요소 입니다.")
-      .oneOf([yup.ref("password"), null], "비밀번호가 일치하지 않습니다.")
+      .oneOf([yup.ref("password")], "비밀번호가 일치하지 않습니다.")
       .min(8, "비밀번호는 8~16자 사이로 입력해주세요!")
       .max(16, "비밀번호는 8~16자 사이로 입력해주세요!"),
   });
