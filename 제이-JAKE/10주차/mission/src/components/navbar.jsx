@@ -1,7 +1,7 @@
 import StyledLink from "./custom-Link";
 import StyledNavbarButton from "./custom-NavbarButton";
 import styled from "styled-components";
-import axios from "axios";
+import API from "../hooks/api";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -31,13 +31,12 @@ const StyledText = styled.p`
 `;
 const Navbar = () => {
   const [email, setEmail] = useState("");
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("accessToken")
+  );
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/user/me", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const response = await API.get("/user/me");
       console.log("유저정보 불러오기 성공:", response.data);
       setEmail(response.data.email);
     } catch (error) {
@@ -46,11 +45,11 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    console.log(localStorage.getItem("accessToken"));
-    if (localStorage.getItem("accessToken")) {
+    console.log(accessToken);
+    if (accessToken) {
       getUser();
     }
-  }, [localStorage.getItem("accessToken")]);
+  }, [accessToken]);
   const handleLogout = () => {
     setEmail("");
     localStorage.removeItem("accessToken");

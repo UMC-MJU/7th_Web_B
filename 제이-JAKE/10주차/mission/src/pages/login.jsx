@@ -78,6 +78,7 @@ const LoginPage = () => {
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
       navigate("/movies");
+      window.location.reload();
     } catch (error) {
       console.error("로그인 실패:", error);
       alert("로그인에 실패하였습니다.");
